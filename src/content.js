@@ -44,10 +44,12 @@ export const routeBackgrounds = {
 
 /* ---------- Landing menu ---------------------------------------------- */
 
+// Values copied from blairxu13/persona3-website's P3Menu (same label → same values).
+// size = font px at a 1440px-wide screen, x / y = nudge px, skew / skewY = the lean
 export const menuItems = [
-  { id: 'about', label: 'ABOUT ME', to: '/about' },
-  { id: 'github', label: 'GITHUB', github: true },
-  { id: 'projects', label: 'PROJECTS', to: '/projects' },
+  { id: 'about', label: 'ABOUT ME', to: '/about', size: 80, x: 0, y: 0, skew: -6, skewY: 10 },
+  { id: 'github', label: 'GITHUB', github: true, size: 68, x: 8, y: 6, skew: 0, skewY: -4 },
+  { id: 'projects', label: 'PROJECTS', to: '/projects', size: 56, x: 10, y: 6, skew: -4, skewY: 7 },
 ]
 
 /* ---------- /projects field mapping ------------------------------------
