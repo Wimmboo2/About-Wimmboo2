@@ -1,0 +1,141 @@
+/* Water transition overlay ------------------------------------------------ */
+
+.water {
+  --wave-h: clamp(110px, 17vh, 190px);
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+}
+.water.is-active {
+  visibility: visible;
+  pointer-events: auto; /* blocks clicks while the water moves */
+}
+
+.water__sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--wave-h) * -1);
+  height: calc(100% + var(--wave-h));
+  display: flex;
+  flex-direction: column;
+  transform: translate3d(0, 100%, 0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+.water[data-mode='fade'] .water__sheet {
+  transform: none;
+}
+
+.water__waves {
+  position: relative;
+  flex: 0 0 var(--wave-h);
+  overflow: hidden;
+}
+
+.water__wave {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 200%;
+  height: 100%;
+  will-change: transform;
+  animation: wave-drift linear infinite;
+  animation-play-state: paused;
+}
+.water.is-active .water__wave,
+.water.is-active .water__bubble {
+  animation-play-state: running;
+}
+
+.water__crest {
+  fill: none;
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+.water__wave--back {
+  animation-duration: 2.8s;
+}
+.water__wave--back .water__fill { fill: var(--cyan); }
+.water__wave--back .water__crest { stroke: var(--white); }
+
+.water__wave--mid {
+  animation-duration: 3.6s;
+  animation-direction: reverse;
+}
+.water__wave--mid .water__fill { fill: var(--selected-blue); }
+.water__wave--mid .water__crest { stroke: var(--cyan); stroke-width: 2; }
+
+.water__wave--front {
+  animation-duration: 2.2s;
+}
+.water__wave--front .water__fill { fill: var(--blue); }
+.water__wave--front .water__crest { stroke: var(--text-light); stroke-width: 2; }
+
+@keyframes wave-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+.water__body {
+  position: relative;
+  flex: 1;
+  margin-top: -2px; /* overlap the front wave so no seam shows */
+  background: linear-gradient(180deg, var(--blue) 0%, var(--blue) 30%, var(--blue-deep) 100%);
+  overflow: hidden;
+}
+
+/* flat, hard-edged light shafts (masked in just below the surface) */
+.water__shafts {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 22%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 22%);
+}
+.water__shaft {
+  position: absolute;
+  top: -10%;
+  height: 130%;
+  background: var(--cyan);
+  opacity: 0.1;
+  transform: skewX(-18deg);
+}
+.water__shaft--1 { left: 18%; width: 6%; }
+.water__shaft--2 { left: 34%; width: 2%; opacity: 0.16; }
+.water__shaft--3 { left: 66%; width: 9%; opacity: 0.07; }
+
+.water__bubbles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.water__bubble {
+  position: absolute;
+  bottom: -40px;
+  border: 3px solid var(--white);
+  border-radius: 50%; /* bubbles are the one round thing */
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: bubble-rise ease-in infinite;
+  animation-play-state: paused;
+}
+.water__bubble:nth-child(3n) { border-color: var(--cyan); }
+
+@keyframes bubble-rise {
+  0%   { transform: translate3d(0, 0, 0); opacity: 0; }
+  15%  { opacity: 0.9; }
+  100% { transform: translate3d(12px, -75vh, 0); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .water {
+    background: var(--blue);
+  }
+  .water__wave,
+  .water__bubble {
+    animation: none;
+  }
+}
