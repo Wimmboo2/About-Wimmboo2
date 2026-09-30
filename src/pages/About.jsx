@@ -2,16 +2,16 @@ import { about } from '../content.js'
 import { useEscBack } from '../lib/transition.js'
 import '../styles/about.css'
 
-// Built like P3R's submenu lists (the BGM/playlist screen): a title sitting on
-// the top edge of a navy band, one cyan row per line, and the game's selected-
-// row look (white bar, thin pink-red line on top) on the clickable rows.
+// Built like P3R's submenu lists (the BGM/playlist screen): a navy band with
+// one cyan row per line, and the game's selected-row look (white bar, thin
+// pink-red line on top) on the clickable rows. The heading is screen-reader only.
 export default function About() {
   useEscBack()
 
   return (
     <main className="page page--about">
       <div className="about">
-        <h1 className="about__title">ABOUT ME</h1>
+        <h1 className="sr-only">About me</h1>
         <div className="about__band">
           {about.intro.map((line) => (
             <p key={line} className="about__row">
