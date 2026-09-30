@@ -10,20 +10,6 @@
   width: 42vw;
 }
 
-/* title sits on the band's top edge, like "PLAYLIST" */
-.about__title {
-  position: relative;
-  z-index: 2;
-  margin: 0 0 calc(-18 * var(--u)) calc(96 * var(--u));
-  font-family: var(--font-title);
-  font-weight: 900;
-  font-style: italic;
-  font-size: calc(96 * var(--u));
-  line-height: 1;
-  letter-spacing: -0.01em;
-  color: var(--p3r-title);
-}
-
 .about__band {
   padding: calc(26 * var(--u)) 0 calc(30 * var(--u));
   background: rgb(4 7 62 / 0.94);
@@ -64,10 +50,6 @@
   }
   .about {
     width: 100%;
-  }
-  .about__title {
-    margin-left: 16px;
-    font-size: clamp(32px, 9.6vw, 51px);
   }
   .about__row {
     padding-left: 20px;

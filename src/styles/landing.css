@@ -5,8 +5,8 @@
 }
 
 .menu {
-  /* 1 unit = 1px on a 1440px-wide screen */
-  --u: clamp(0.5px, 0.0694vw, 1.5px);
+  /* 0.8px per unit on a 1440px-wide screen (item sizes in content.js are units) */
+  --u: clamp(0.4px, 0.0555vw, 1.2px);
   position: absolute;
   left: 58%;
   top: 50%;
@@ -127,7 +127,7 @@
     min-height: 100dvh;
   }
   .menu {
-    --u: 0.62px;
+    --u: 0.5px;
     right: auto;
     left: 42%;
     transform: translate(-50%, -50%);
