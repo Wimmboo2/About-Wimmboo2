@@ -3,264 +3,206 @@
   align-items: center;
 }
 
-/* all text lives in the left ~55% so the character stays visible */
+/* everything stays in the left ~55% so the character stays visible */
 .about {
   width: calc(min(55vw, 1500px) / var(--ui-zoom));
   margin-left: calc(clamp(16px, 5vw, 200px) / var(--ui-zoom));
   display: flex;
   flex-direction: column;
-  gap: clamp(14px, 2.2vh, 24px);
-  padding: 32px 0 80px;
+  gap: clamp(18px, 3vh, 34px);
+  padding: 32px 0 60px;
 }
 
-/* ---------- heading on a white slanted tag ---------- */
+/* ---------- heading: same red-on-white-wedge as the selected menu item ---------- */
 .about__heading {
   position: relative;
   align-self: flex-start;
-  margin: 0 0 4px;
-  padding: 0.04em 0.55em 0.02em 0.4em;
-  transform: rotate(-5deg);
-  transform-origin: left bottom;
-  line-height: 1;
+  margin: 0;
+  font-size: clamp(3rem, 6.4vw, 6.6rem);
+  font-weight: 400;
+  transform: rotate(6deg);
+  transform-origin: left center;
 }
-.about__heading-tag {
+
+/* ---------- dialogue window ---------- */
+.dlg {
+  position: relative;
+  padding-top: 26px;
+  cursor: default;
+}
+.dlg__name {
   position: absolute;
-  inset: 0;
+  z-index: 2;
+  top: 0;
+  left: 22px;
+  margin: 0;
+  padding: 6px 26px 5px 18px;
   background: var(--white);
-  clip-path: polygon(0.3em 0, 100% 0, calc(100% - 0.3em) 100%, 0 100%);
-  filter: none;
+  clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  filter: drop-shadow(4px 4px 0 var(--near-black));
+  transform: rotate(-3deg);
 }
-.about__heading::before {
-  /* hard offset shadow for the tag */
+.dlg__name::after {
+  /* cyan stripe under the name, a P3R staple */
   content: '';
   position: absolute;
-  inset: 0;
-  transform: translate(7px, 7px);
-  background: var(--near-black);
-  clip-path: polygon(0.3em 0, 100% 0, calc(100% - 0.3em) 100%, 0 100%);
+  left: 10px;
+  right: 6px;
+  bottom: 0;
+  height: 4px;
+  background: var(--cyan);
 }
-.about__heading-text {
-  position: relative;
+.dlg__name-text {
   display: inline-block;
   font-family: var(--font-heading);
-  font-style: italic;
   font-weight: 400;
-  font-size: clamp(3rem, 6.4vw, 6.4rem);
-  letter-spacing: 0.01em;
+  font-size: clamp(22px, 2vw, 30px);
+  line-height: 1;
+  letter-spacing: 0.02em;
   color: var(--blue-deep);
-  transform: skewX(-8deg); /* Anton has no italic: add a real slant */
+  transform: skewX(-13deg);
 }
 
-/* ---------- tab strip ---------- */
-.tabs {
-  display: flex;
-  gap: 8px;
-  padding-left: 6px;
-}
-.tab {
-  --cut: 12px;
-  --split: 34%;
+.dlg__box {
   position: relative;
-  flex: 0 0 auto;
-  width: clamp(118px, 11vw, 156px);
-  height: 46px;
-  display: flex;
-  align-items: center;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  outline: none;
-  filter: drop-shadow(4px 4px 0 var(--near-black));
-  transition: transform 160ms var(--ease-out);
-  -webkit-tap-highlight-color: transparent;
+  min-height: 150px;
+  padding: 34px 48px 30px 40px;
+  background: rgb(4 8 50 / 0.9);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 22px) 100%, 0 100%);
+  border-left: 6px solid var(--cyan);
+  box-shadow:
+    inset 0 2px 0 var(--text-light),
+    inset 0 -2px 0 var(--text-light);
 }
-.tab.is-selected {
-  transform: scale(1.08);
-  z-index: 1;
-}
-.tab__bg,
-.tab__hl,
-.tab__hl-inner {
-  position: absolute;
-  clip-path: polygon(var(--cut) 0, 100% 0, calc(100% - var(--cut)) 100%, 0 100%);
-}
-.tab__bg {
-  inset: 0;
-  background: var(--row-navy);
-}
-.tab__hl {
-  inset: 0;
-  background: var(--red-grad);
-}
-.tab__hl-inner {
-  top: 4px;
-  right: 4px;
-  bottom: 0;
-  left: 0;
-  background: var(--selected-blue);
-}
-.tab__hl-white {
-  position: absolute;
-  inset: 0;
-  background: var(--white);
-  clip-path: polygon(calc(var(--split) + 12px) 0, 100% 0, 100% 100%, var(--split) 100%);
-}
-.tab__n {
-  position: relative;
-  width: var(--split);
-  text-align: center;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 17px;
-  color: var(--text-light);
-  opacity: 0.7;
-}
-.tab__label {
-  position: relative;
-  flex: 1;
-  text-align: center;
-  padding-right: 10px;
+.dlg__text p {
+  margin: 0 0 0.55em;
   font-family: var(--font-label);
+  font-weight: 600;
+  font-size: clamp(17px, 1.45vw, 23px);
+  line-height: 1.5;
+  color: var(--white);
+}
+.dlg__text p:first-of-type {
   font-weight: 800;
-  font-size: 16px;
-  letter-spacing: 0.1em;
-  color: var(--text-light);
+  font-size: clamp(20px, 1.8vw, 28px);
 }
-.tab.is-selected .tab__n {
-  color: var(--white);
-  opacity: 1;
+.dlg__ghost {
+  color: transparent; /* reserves space so the box doesn't grow while typing */
 }
-.tab.is-selected .tab__label {
-  color: var(--blue-deep);
+.dlg__next {
+  position: absolute;
+  right: 44px;
+  bottom: 16px;
+  width: 18px;
+  height: 13px;
+  background: var(--cyan);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  animation: dlg-next 0.7s steps(2, jump-none) infinite alternate;
 }
-.tab:hover:not(.is-selected) .tab__label {
-  color: var(--white);
-}
-.tab:focus-visible .tab__hl-inner {
-  box-shadow: inset 0 -3px 0 var(--red);
-}
-.tab:focus-visible:not(.is-selected) .tab__bg {
-  background: var(--red);
+@keyframes dlg-next {
+  from { transform: translateY(0); }
+  to   { transform: translateY(5px); }
 }
 
-/* ---------- content panel ---------- */
-.about__panel {
-  --cut: 26px;
-}
-.about__panel .spanel__inner {
-  min-height: clamp(300px, 44vh, 440px);
-  overflow: hidden;
-}
-.about__content {
-  position: relative;
-  padding-bottom: 28px;
-}
-.panel__tab {
-  left: calc((var(--cut) + 12px) * -1 + var(--cut));
-}
-.panel__bar {
-  margin: 0 calc((var(--cut) + 12px) * -1) 18px;
-  padding: 10px calc(var(--cut) + 34px) 8px;
+/* ---------- facts: P3R list ---------- */
+.facts__h {
+  display: inline-block;
+  margin: 0 0 10px 6px;
+  padding: 4px 22px 3px 14px;
   background: var(--near-black);
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
   font-family: var(--font-label);
   font-weight: 800;
-  font-size: clamp(18px, 1.7vw, 24px);
-  letter-spacing: 0.06em;
+  font-size: 14px;
+  letter-spacing: 0.2em;
   color: var(--white);
-  text-transform: uppercase;
 }
-
-/* bio */
-.bio__role {
-  margin: 0 0 14px;
-  font-family: var(--font-italic);
-  font-style: italic;
-  font-weight: 500;
-  font-size: clamp(15px, 1.25vw, 19px);
-  color: var(--cyan);
-}
-.bio__text {
-  margin: 0;
-  max-width: 62ch;
-  font-family: var(--font-label);
-  font-weight: 500;
-  font-size: clamp(15px, 1.15vw, 18px);
-  line-height: 1.6;
-  color: #e4edff;
-}
-
-/* skills */
-.skills__list {
-  list-style: none;
-  margin: 0;
-  padding: 0 8px 0 0;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(10px, 1.6vh, 16px);
-}
-
-/* facts: mini save rows */
 .facts__list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
+}
+.facts__item {
+  /* slight stagger down the list, like the game's menus */
+  margin-left: calc(var(--i) * 10px);
 }
 .fact {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(8em, 34%) 1fr;
+  grid-template-columns: minmax(7em, 32%) 1fr;
   align-items: center;
-  gap: 14px;
-  min-height: 54px;
-  padding: 8px 34px 8px 40px;
+  gap: 16px;
+  min-height: 50px;
+  padding: 8px 40px 8px 26px;
   outline: none;
   cursor: default;
-  filter: drop-shadow(4px 4px 0 var(--near-black));
-}
-.fact__bg,
-.fact__bg-inner {
-  position: absolute;
-  inset: 0;
-  background: #0b0d42;
+  background: rgb(4 8 50 / 0.82);
   clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
 }
-.fact.is-selected .fact__bg {
-  background: var(--red-grad);
+.fact::before {
+  /* thin cyan tick on the left edge */
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: var(--selected-blue);
 }
-.fact.is-selected .fact__bg-inner {
-  inset: 3px 4px 0 0;
+
+/* selected row: white bar with a red copy peeking out, like the menu wedge */
+.fact__hl {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
 }
-.fact .numtab {
-  width: 24px;
-  height: 24px;
+.fact__hl-red,
+.fact__hl-white {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
 }
-.fact .numtab__n {
-  font-size: 12px;
-  left: 3px;
+.fact__hl-red {
+  background: var(--red);
 }
+.fact__hl-white {
+  background: var(--white);
+  inset: 0 5px 4px 0;
+}
+.fact.is-selected::before {
+  background: var(--red);
+  z-index: 1;
+}
+
 .fact__title {
   position: relative;
-  font-family: var(--font-label);
-  font-weight: 800;
-  font-size: 13px;
-  letter-spacing: 0.1em;
+  font-family: var(--font-heading);
+  font-size: clamp(18px, 1.5vw, 24px);
+  line-height: 1;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
-  color: var(--text-light);
+  color: #36a2e6;
+  transform: skewX(-13deg);
+  transform-origin: left center;
 }
 .fact__text {
   position: relative;
-  font-family: var(--font-italic);
-  font-style: italic;
-  font-weight: 500;
-  font-size: clamp(15px, 1.2vw, 18px);
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: clamp(15px, 1.2vw, 19px);
   color: var(--white);
 }
 .fact.is-selected .fact__title {
-  color: var(--cyan);
+  color: var(--red);
+}
+.fact.is-selected .fact__text {
+  color: var(--blue-deep);
+}
+.fact:focus-visible .fact__hl-red {
+  background: var(--pink-red);
 }
 
 /* ---------- small screens ---------- */
@@ -271,49 +213,29 @@
   .about {
     width: auto;
     margin: 0 16px;
-    padding: 28px 0 96px;
+    padding: 64px 0 60px;
   }
-  .about__heading-text {
+  .about__heading {
     font-size: clamp(2.4rem, 13vw, 3.4rem);
   }
-  .tabs {
-    padding-left: 0;
+  .about__heading .blade {
+    width: 130%;
   }
-  .tab {
-    flex: 1 1 0;
-    width: auto;
-    height: 42px;
-  }
-  .tab.is-selected {
-    transform: scale(1.04);
-  }
-  .tab__n {
-    display: none;
-  }
-  .tab {
-    --split: 0%;
-  }
-  .tab__label {
-    padding: 0 0 0 10px;
-    font-size: 13px;
-    letter-spacing: 0.05em;
-  }
-  .about__panel {
-    --cut: 14px;
-  }
-  .about__panel .spanel__inner {
-    min-height: 0;
+  .dlg__box {
+    padding: 30px 30px 26px 22px;
   }
   .fact {
     grid-template-columns: 1fr;
-    gap: 2px;
+    gap: 4px;
+    padding: 10px 30px 10px 20px;
   }
-  .stat {
-    grid-template-columns: 1fr 2.4ch;
-    grid-template-areas: 'label rank' 'bar rank';
-    row-gap: 6px;
+  .facts__item {
+    margin-left: calc(var(--i) * 4px);
   }
-  .stat__label { grid-area: label; }
-  .stat__bar { grid-area: bar; }
-  .stat__rank { grid-area: rank; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dlg__next {
+    animation: none;
+  }
 }

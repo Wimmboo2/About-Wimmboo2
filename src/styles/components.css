@@ -77,76 +77,42 @@
   stroke: var(--moon-yellow);
 }
 
-/* ---------- SlantedPanel ---------- */
-.spanel {
-  --cut: 28px;
-  --bw: 2px;
-  position: relative;
-  filter: var(--shadow-hard-f);
-}
-.spanel__frame {
-  background: var(--white);
-  clip-path: polygon(var(--cut) 0, 100% 0, calc(100% - var(--cut)) 100%, 0 100%);
-  padding: var(--bw);
-}
-.spanel__inner {
-  background: rgb(20 23 94 / 0.95);
-  clip-path: polygon(var(--cut) 0, 100% 0, calc(100% - var(--cut)) 100%, 0 100%);
-  padding: 0 calc(var(--cut) + 12px);
-  min-height: 100%;
-}
-
-/* ---------- StatBar ---------- */
-.stat {
-  display: grid;
-  grid-template-columns: minmax(7.5em, 34%) 1fr 2.4ch;
-  align-items: center;
-  gap: 14px;
-}
-.stat__label {
-  font-family: var(--font-label);
-  font-weight: 700;
-  font-size: clamp(14px, 1.2vw, 18px);
-  color: var(--text-light);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.stat__bar {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  gap: 4px;
-  height: 18px;
-  transform: skewX(-20deg);
-}
-.stat__seg {
-  background: var(--near-black);
-  box-shadow: inset 0 0 0 1px rgb(188 216 255 / 0.18);
-  overflow: hidden;
-}
-.stat__fill {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: var(--cyan);
+/* ---------- Blade: red italic text on a white wedge (the P3R selection) ---------- */
+.blade {
+  position: absolute;
+  z-index: 0;
+  left: -0.28em;
+  top: 0.02em;
+  width: 168%;
+  height: 1.02em;
   transform-origin: left center;
-  animation: seg-fill 160ms var(--ease-out) both;
+  rotate: -4deg; /* tilts against the text so the end of the word hangs off it */
+  pointer-events: none;
 }
-@keyframes seg-fill {
-  from { transform: scaleX(0); opacity: 0.2; }
-  to   { transform: scaleX(1); opacity: 1; }
+.blade__red,
+.blade__white {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 -2%, 100% 72%, 0.6% 100%);
 }
-.stat__rank {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(28px, 2.6vw, 40px);
+.blade__red {
+  background: var(--red);
+  transform: translate(-0.06em, 0.07em);
+}
+.blade__white {
+  background: var(--white);
+}
+.blade-text {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  padding: 0 0.12em;
+  font-family: var(--font-heading);
   line-height: 1;
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-  color: var(--white);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .stat__fill {
-    animation: none;
-  }
+  white-space: nowrap;
+  transform: skewX(-13deg); /* heavy italic, like the game */
+  color: var(--red);
+  text-shadow:
+    0.035em 0.035em 0 #8a0718,
+    -0.012em -0.012em 0 #ff4a62;
 }

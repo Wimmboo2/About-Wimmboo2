@@ -120,21 +120,12 @@ export const fallbackRepos = [
 /* ---------- /about ----------------------------------------------------- */
 
 export const about = {
-  // PLACEHOLDER: your name, role/school line and a short bio
-  name: 'YOUR NAME',
-  role: 'Student Developer / Your School',
-  bio:
-    "PLACEHOLDER bio. A couple of sentences about who you are, what you like building, " +
-    'and what you are currently learning. Keep it short: this panel reads best at 3-5 lines.',
-
-  // PLACEHOLDER: label + value from 1 to 10
-  skills: [
-    { label: 'Frontend', value: 8 },
-    { label: 'Backend', value: 6 },
-    { label: 'Design', value: 7 },
-    { label: 'Problem Solving', value: 8 },
-    { label: 'Git / Tooling', value: 6 },
-    { label: 'Communication', value: 7 },
+  // PLACEHOLDER: the name shown on the dialogue name tag
+  name: 'WIMMBOO',
+  // PLACEHOLDER: what the dialogue box says, one entry per paragraph (typed out)
+  intro: [
+    'Hi, my name is Wimmboo.',
+    'PLACEHOLDER: one or two more lines about you. Keep it short.',
   ],
 
   // PLACEHOLDER: 3-4 short facts

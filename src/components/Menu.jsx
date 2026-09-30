@@ -14,7 +14,17 @@ const itemVariants = {
   }),
 }
 
-// P3R pause-menu style list: red blade on the selected item, slides between items.
+// Each item floats at its own angle, like the P3R pause menu.
+// r = tilt (deg), ry = perspective turn (deg), x = sideways offset (em of the item)
+const POSES = [
+  { r: 7, ry: -16, x: 0 },
+  { r: -5, ry: 12, x: 0.55 },
+  { r: -2, ry: -8, x: 0.05 },
+  { r: 1, ry: 10, x: 0.45 },
+  { r: 5, ry: -12, x: -0.1 },
+]
+
+// Selected item = red text on a white wedge that wipes in from the left.
 export default function Menu() {
   const { go, busy } = useTransitionNav()
   const revealed = useRevealed()
@@ -58,11 +68,12 @@ export default function Menu() {
         {menuItems.map((item, i) => {
           const isSel = i === selected
           const external = isExternal(item)
+          const pose = POSES[i % POSES.length]
           return (
             <motion.li
               key={item.id}
               className="menu__item"
-              style={{ '--i': i }}
+              style={{ '--i': i, '--r': `${pose.r}deg`, '--ry': `${pose.ry}deg`, '--x': `${pose.x}em` }}
               custom={i}
               variants={itemVariants}
               initial="hidden"
@@ -86,23 +97,25 @@ export default function Menu() {
                     activate(item)
                   }}
                 >
-                  {isSel && (
-                    <motion.span
-                      layoutId="menu-blade"
-                      className="menu__blade"
-                      transition={{ type: 'spring', stiffness: 520, damping: 38 }}
-                      aria-hidden="true"
-                    >
-                      <span className="menu__blade-shadow" />
-                      <span className="menu__blade-red" />
-                    </motion.span>
-                  )}
                   <motion.span
-                    className="menu__text"
-                    animate={{ scale: isSel ? 1 : 0.78 }}
-                    transition={{ type: 'spring', stiffness: 520, damping: 34 }}
+                    className="menu__scale"
+                    initial={false}
+                    animate={{ scale: isSel ? 1 : 0.84 }}
+                    transition={{ type: 'spring', stiffness: 600, damping: 30 }}
                   >
-                    {item.label}
+                    {isSel && (
+                      <motion.span
+                        className="blade"
+                        aria-hidden="true"
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        transition={{ duration: 0.16, ease: [0.2, 0.9, 0.3, 1] }}
+                      >
+                        <span className="blade__red" />
+                        <span className="blade__white" />
+                      </motion.span>
+                    )}
+                    <span className="menu__text">{item.label}</span>
                   </motion.span>
                 </a>
               </div>
