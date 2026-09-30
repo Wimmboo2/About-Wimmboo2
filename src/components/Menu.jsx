@@ -6,30 +6,32 @@ import { useRevealed, useTransitionNav } from '../lib/transition.js'
 const githubUrl = `https://github.com/${githubUsername}`
 
 const itemVariants = {
-  hidden: { x: 36, opacity: 0 },
+  hidden: { x: '60vw', opacity: 0 },
   shown: (i) => ({
     x: 0,
     opacity: 1,
-    transition: { delay: 0.08 + i * 0.08, duration: 0.38, ease: [0.22, 1, 0.36, 1] },
+    transition: { delay: 0.05 + i * 0.09, duration: 0.55, ease: [0.22, 1, 0.36, 1] },
   }),
 }
 
-// P3R pause menu: the selected item gets a white triangle (with a pink one
-// popping behind it) and turns red, bright inside the triangle, dark outside.
+// Each item floats at its own angle, like the P3R pause menu.
+// r = tilt (deg), ry = perspective turn (deg), x = sideways offset (em of the item)
+const POSES = [
+  { r: 7, ry: -16, x: 0 },
+  { r: -5, ry: 12, x: 0.55 },
+  { r: -2, ry: -8, x: 0.05 },
+  { r: 1, ry: 10, x: 0.45 },
+  { r: 5, ry: -12, x: -0.1 },
+]
+
+// Selected item = red text on a white wedge that wipes in from the left.
 export default function Menu() {
   const { go, busy } = useTransitionNav()
   const revealed = useRevealed()
   const [selected, setSelected] = useState(0)
-  const [pop, setPop] = useState(0) // bumps to replay the pink pop
   const selectedRef = useRef(0)
   selectedRef.current = selected
   const linkRefs = useRef([])
-
-  const select = (i) => {
-    if (i === selectedRef.current) return
-    setSelected(i)
-    setPop((p) => p + 1)
-  }
 
   const hrefFor = (item) =>
     item.github ? (githubMode === 'profile' ? githubUrl : '/github') : item.to
@@ -48,7 +50,7 @@ export default function Menu() {
         e.preventDefault()
         const dir = e.key === 'ArrowDown' ? 1 : -1
         const n = (selectedRef.current + dir + menuItems.length) % menuItems.length
-        select(n)
+        setSelected(n)
         linkRefs.current[n]?.focus()
       } else if (e.key === 'Enter' && !linkRefs.current.includes(document.activeElement)) {
         // Enter with nothing focused → activate the highlighted item
@@ -66,22 +68,18 @@ export default function Menu() {
         {menuItems.map((item, i) => {
           const isSel = i === selected
           const external = isExternal(item)
-          const dist = Math.abs(i - selected)
+          const pose = POSES[i % POSES.length]
           return (
             <motion.li
               key={item.id}
               className="menu__item"
-              style={{
-                '--size': item.size,
-                marginRight: `calc(${item.x} * var(--u))`,
-                marginTop: `calc(${item.y} * var(--u))`,
-              }}
+              style={{ '--i': i, '--r': `${pose.r}deg`, '--ry': `${pose.ry}deg`, '--x': `${pose.x}em` }}
               custom={i}
               variants={itemVariants}
               initial="hidden"
               animate={revealed ? 'shown' : 'hidden'}
             >
-              <div className="menu__bob" style={{ animationDelay: `${i * -1.1}s` }}>
+              <div className="menu__bob">
                 <a
                   ref={(el) => (linkRefs.current[i] = el)}
                   href={hrefFor(item)}
@@ -90,28 +88,35 @@ export default function Menu() {
                   {...(external
                     ? { target: '_blank', rel: 'noopener noreferrer', 'aria-label': `${item.label} (opens in a new tab)` }
                     : {})}
-                  onMouseEnter={() => select(i)}
-                  onFocus={() => select(i)}
+                  onMouseEnter={() => setSelected(i)}
+                  onFocus={() => setSelected(i)}
                   onClick={(e) => {
-                    select(i)
+                    setSelected(i)
                     if (external && !busy) return // let the browser open the new tab
                     e.preventDefault()
                     activate(item)
                   }}
                 >
-                  <span
-                    className="menu__skew"
-                    style={{ transform: `skewX(${item.skew}deg) skewY(${item.skewY}deg)` }}
+                  <motion.span
+                    className="menu__scale"
+                    initial={false}
+                    animate={{ scale: isSel ? 1 : 0.9 }}
+                    transition={{ type: 'spring', stiffness: 600, damping: 30 }}
                   >
-                    <span key={isSel ? `pop-${pop}` : 'idle'} className={`menu__pink ${isSel ? 'is-on' : ''}`} aria-hidden="true" />
-                    <span className="menu__white" aria-hidden="true" />
-                    <span className="menu__label" style={{ opacity: isSel ? 1 : Math.max(0.5, 1 - dist * 0.2) }}>
-                      <span className="menu__text">{item.label}</span>
-                      <span className="menu__text menu__text--bright" aria-hidden="true">
-                        {item.label}
-                      </span>
-                    </span>
-                  </span>
+                    {isSel && (
+                      <motion.span
+                        className="blade"
+                        aria-hidden="true"
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        transition={{ duration: 0.16, ease: [0.2, 0.9, 0.3, 1] }}
+                      >
+                        <span className="blade__red" />
+                        <span className="blade__white" />
+                      </motion.span>
+                    )}
+                    <span className="menu__text">{item.label}</span>
+                  </motion.span>
                 </a>
               </div>
             </motion.li>

@@ -5,56 +5,65 @@ import '../styles/about.css'
 
 const ease = [0.22, 1, 0.36, 1]
 
-// One big P3R "reveal" panel: a white slab tilted across the screen with two
-// black bars on it (intro on top, facts below), plus a big stroked title.
 export default function About() {
   useEscBack()
   const revealed = useRevealed()
-  const [lead, ...rest] = about.intro
+  const [first, ...rest] = about.intro
 
   return (
     <main className="page page--about">
-      <motion.h1
-        className="about-title"
-        initial={{ opacity: 0, scale: 0.55, y: -10 }}
-        animate={revealed ? { opacity: 1, scale: [0.55, 1.1, 1], y: [-10, 2, 0] } : { opacity: 0, scale: 0.55, y: -10 }}
-        transition={{ duration: 0.38, ease, delay: 0.2 }}
+      {/* one big diagonal slab, bleeding off the left edge */}
+      <motion.div
+        className="slab"
+        aria-hidden="true"
+        initial={{ x: '-100%' }}
+        animate={{ x: revealed ? 0 : '-100%' }}
+        transition={{ duration: 0.45, ease }}
       >
-        ABOUT ME
-      </motion.h1>
+        <span className="slab__white" />
+        <span className="slab__cyan" />
+        <span className="slab__fill" />
+      </motion.div>
 
-      <motion.section
-        className="reveal"
-        aria-label="About me"
-        initial={{ opacity: 0, x: -120, scaleX: 0.72 }}
-        animate={
-          revealed
-            ? { opacity: [0, 0.98, 1], x: [-120, 18, 0], scaleX: [0.72, 1.03, 1] }
-            : { opacity: 0, x: -120, scaleX: 0.72 }
-        }
-        transition={{ duration: 0.46, ease, times: [0, 0.6, 1] }}
+      <motion.div
+        className="about ui-zoom"
+        initial={{ opacity: 0, x: -40 }}
+        animate={revealed ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
+        transition={{ duration: 0.4, ease, delay: 0.18 }}
       >
-        <div className="reveal__upper">
-          <p className="reveal__lead">{lead}</p>
+        <h1 className="about__title">ABOUT ME</h1>
+
+        <div className="about__text">
+          <p className="about__lead">{first}</p>
           {rest.map((line) => (
-            <p key={line} className="reveal__line">
-              {line}
-            </p>
+            <p key={line}>{line}</p>
           ))}
-        </div>
 
-        <div className="reveal__lower">
-          <h2 className="sr-only">Facts</h2>
-          <dl className="reveal__facts">
+          <ul className="about__lines">
             {about.facts.map((f) => (
-              <div key={f.title} className="reveal__fact">
-                <dt>{f.title}</dt>
-                <dd>{f.text}</dd>
-              </div>
+              <li key={f.title}>
+                <span className="about__label">{f.title}:</span> {f.text}
+              </li>
             ))}
-          </dl>
+          </ul>
+
+          <ul className="about__lines">
+            <li>
+              <a href={about.gameOst.url} target="_blank" rel="noopener noreferrer">
+                {about.gameOst.label}
+              </a>
+            </li>
+            <li>
+              <a href={about.nonGameOst.url} target="_blank" rel="noopener noreferrer">
+                {about.nonGameOst.label}
+              </a>
+            </li>
+            <li>
+              <span className="about__label">discord:</span> {about.discord}
+            </li>
+          </ul>
         </div>
-      </motion.section>
+      </motion.div>
     </main>
   )
 }

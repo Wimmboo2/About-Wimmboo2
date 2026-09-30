@@ -31,7 +31,7 @@
     rgb(3 5 30 / var(--projects-dim));
 }
 
-/* about: a flat dim so the white panel pops (tune with --about-dim) */
+/* about: light-to-medium dark blue, keeps the white diagonal readable */
 .bg__overlay--about {
-  background: rgb(40 45 54 / var(--about-dim));
+  background: rgb(5 10 122 / var(--about-dim));
 }

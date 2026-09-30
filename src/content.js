@@ -44,12 +44,10 @@ export const routeBackgrounds = {
 
 /* ---------- Landing menu ---------------------------------------------- */
 
-// size = font size in px at a 1440px-wide screen (scales with the viewport)
-// x / y = nudge (px), skew / skewY = the per-item lean that gives the P3R look
 export const menuItems = [
-  { id: 'about', label: 'ABOUT ME', to: '/about', size: 80, x: 0, y: 0, skew: -6, skewY: 10 },
-  { id: 'github', label: 'GITHUB', github: true, size: 70, x: 20, y: 8, skew: -11, skewY: -8 },
-  { id: 'projects', label: 'PROJECTS', to: '/projects', size: 64, x: 8, y: 6, skew: -4, skewY: 6 },
+  { id: 'about', label: 'ABOUT ME', to: '/about' },
+  { id: 'github', label: 'GITHUB', github: true },
+  { id: 'projects', label: 'PROJECTS', to: '/projects' },
 ]
 
 /* ---------- /projects field mapping ------------------------------------
@@ -128,11 +126,16 @@ export const about = {
     'PLACEHOLDER: one or two more lines about you. Keep it short.',
   ],
 
-  // PLACEHOLDER: 3-4 short facts
+  // PLACEHOLDER: 3-4 short facts (each one is a line)
   facts: [
     { title: 'Based in', text: 'Your city, your country' },
     { title: 'Currently', text: 'Learning React animation and WebGL' },
     { title: 'Favorite game', text: 'Persona 3 Reload (obviously)' },
     { title: 'Fun fact', text: 'Something short and specific about you' },
   ],
+
+  // PLACEHOLDER: shown at the very bottom, in this order
+  gameOst: { label: 'game ost', url: 'https://music.apple.com/PLACEHOLDER-game-ost-playlist' },
+  nonGameOst: { label: 'non-game ost', url: 'https://music.apple.com/PLACEHOLDER-non-game-ost-playlist' },
+  discord: 'PLACEHOLDER_discord_username',
 }

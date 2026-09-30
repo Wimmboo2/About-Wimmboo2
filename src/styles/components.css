@@ -76,3 +76,46 @@
 .moon--selected .moon__rim {
   stroke: var(--moon-yellow);
 }
+
+/* ---------- Blade: red italic text on a white wedge (the P3R selection) ---------- */
+.blade {
+  position: absolute;
+  z-index: 0;
+  left: -0.3em;
+  top: 0.1em;
+  width: 168%;
+  height: 1.08em;
+  transform-origin: left center;
+  rotate: -4deg; /* tilts against the text so the end of the word hangs off it */
+  pointer-events: none;
+}
+.blade__red,
+.blade__white {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 -2%, 100% 72%, 0.6% 100%);
+}
+.blade__red {
+  background: var(--red);
+  transform: translate(-0.06em, 0.07em);
+}
+.blade__white {
+  background: var(--white);
+}
+.blade-text {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  padding: 0 0.12em;
+  font-family: var(--font-heading);
+  font-weight: var(--heading-weight);
+  font-style: italic;
+  line-height: 1;
+  letter-spacing: var(--heading-spacing);
+  white-space: nowrap;
+  transform: var(--heading-transform);
+  color: var(--red);
+  text-shadow:
+    0.035em 0.035em 0 #8a0718,
+    -0.012em -0.012em 0 #ff4a62;
+}
