@@ -1,0 +1,119 @@
+.page--about {
+  --slab-w: 56vw;
+  --slab-bottom: 78%; /* where the slanted edge meets the bottom of the screen */
+  --pad-x: 7vw;
+  display: flex;
+  align-items: center;
+}
+
+/* ---------- the slab ---------- */
+.slab {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--slab-w);
+  will-change: transform;
+}
+.slab > span {
+  position: absolute;
+  inset: 0;
+}
+.slab__white {
+  background: var(--white);
+  clip-path: polygon(0 0, 100% 0, var(--slab-bottom) 100%, 0 100%);
+}
+.slab__cyan {
+  background: var(--cyan);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, calc(var(--slab-bottom) - 14px) 100%, 0 100%);
+}
+.slab__fill {
+  background: rgb(5 8 48 / 0.95);
+  clip-path: polygon(0 0, calc(100% - 20px) 0, calc(var(--slab-bottom) - 20px) 100%, 0 100%);
+}
+
+/* ---------- content ---------- */
+.about {
+  position: relative;
+  width: calc(min(34vw, 620px) / var(--ui-zoom));
+  margin-left: calc(var(--pad-x) / var(--ui-zoom));
+  padding: 40px 0;
+}
+
+.about__title {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 0 0 22px;
+  font-family: var(--font-heading);
+  font-weight: var(--heading-weight);
+  font-style: italic;
+  font-size: clamp(34px, 3.6vw, 58px);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--white);
+}
+/* one plain flow of text: intro, a blank line, lines, a blank line, links */
+.about__text {
+  max-width: 46ch;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: clamp(15px, 1.1vw, 18px);
+  line-height: 1.6;
+  color: #d4e3ff;
+}
+.about__text p {
+  margin: 0;
+}
+.about__text .about__lead {
+  font-weight: 700;
+  font-size: clamp(19px, 1.5vw, 24px);
+  line-height: 1.35;
+  color: var(--white);
+  margin-bottom: 0.3em;
+}
+.about__lines {
+  list-style: none;
+  margin: 1.6em 0 0; /* the "blank line" between blocks */
+  padding: 0;
+}
+.about__label {
+  font-weight: 700;
+  color: var(--cyan);
+}
+.about__text a {
+  color: var(--cyan);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.about__text a:hover {
+  color: var(--white);
+}
+
+/* ---------- small screens: slab becomes a full-width sheet ---------- */
+@media (max-width: 700px) {
+  .page--about {
+    --slab-w: 100vw;
+    --slab-bottom: 100%;
+    --pad-x: 20px;
+    align-items: flex-start;
+  }
+  .slab {
+    position: fixed;
+  }
+  .slab__white,
+  .slab__cyan,
+  .slab__fill {
+    clip-path: none;
+  }
+  .slab__white,
+  .slab__cyan {
+    display: none;
+  }
+  .about {
+    width: auto;
+    margin: 0 20px;
+    padding: 56px 0 48px;
+  }
+}

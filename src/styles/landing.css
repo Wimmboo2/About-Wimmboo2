@@ -1,0 +1,168 @@
+.page--landing {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* thin red stripes down the right edge of the screen */
+.page--landing::before,
+.page--landing::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+.page--landing::before {
+  right: 0;
+  width: 5px;
+  background: var(--edge-red);
+}
+.page--landing::after {
+  right: 9px;
+  width: 2px;
+  background: rgb(245 122 139 / 0.22);
+}
+
+.menu {
+  /* 1 unit = 1px on a 1440px-wide screen */
+  --u: clamp(0.5px, 0.0694vw, 1.5px);
+  position: absolute;
+  right: clamp(4%, 12vw, 18%);
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 48px;
+}
+.menu__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.menu__item {
+  font-size: calc(var(--size) * var(--u));
+}
+.menu__bob {
+  animation: menu-bob 3.6s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes menu-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+
+.menu__link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.menu__skew {
+  position: relative;
+  display: flex;
+  align-items: center;
+  isolation: isolate;
+}
+
+/* the triangle (size + clip set inline from the item's font size) */
+.menu__white,
+.menu__pink {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform-origin: left center;
+  pointer-events: none;
+}
+.menu__white {
+  z-index: 2;
+  background: var(--white);
+  transform: translateY(-50%) scaleX(0);
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.menu__link.is-selected .menu__white {
+  transform: translateY(-50%) scaleX(1);
+}
+.menu__pink {
+  z-index: 1;
+  background: var(--menu-pink);
+  transform: translateY(-40%) translateX(-12px) scaleX(0);
+}
+.menu__pink.is-on {
+  animation: menu-pop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@keyframes menu-pop {
+  0%   { transform: translateY(-40%) translateX(-12px) scaleX(0) scaleY(1); }
+  55%  { transform: translateY(-46%) translateX(-15px) scaleX(1.22) scaleY(1.18); }
+  75%  { transform: translateY(-39%) translateX(-11px) scaleX(0.96) scaleY(0.97); }
+  100% { transform: translateY(-40%) translateX(-12px) scaleX(1) scaleY(1); }
+}
+
+.menu__label {
+  position: relative;
+  z-index: 3;
+  transition: opacity 0.12s ease;
+}
+.menu__text {
+  display: block;
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 1em;
+  line-height: 0.85;
+  letter-spacing: 2px;
+  white-space: nowrap;
+  user-select: none;
+  color: var(--menu-cyan);
+  transition: color 0.12s ease;
+}
+.menu__link:hover:not(.is-selected) .menu__text {
+  color: #00d9ff;
+}
+.menu__link.is-selected .menu__text {
+  color: var(--menu-red-dark);
+}
+/* bright red copy, clipped to the triangle (clip set inline) */
+.menu__text--bright {
+  position: absolute;
+  inset: 0;
+  color: var(--menu-red) !important;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+.menu__link.is-selected .menu__text--bright {
+  opacity: 1;
+}
+
+/* keyboard focus: the selected look plus a pink edge on the triangle */
+.menu__link:focus-visible .menu__pink {
+  background: var(--pink-red);
+}
+
+@media (max-width: 700px) {
+  .page--landing {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  .menu {
+    --u: 0.62px;
+    right: auto;
+    left: 42%;
+    transform: translate(-50%, -50%);
+    padding: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu__bob {
+    animation: none;
+  }
+  .menu__pink.is-on {
+    animation: none;
+    transform: translateY(-40%) translateX(-12px) scaleX(1);
+  }
+}

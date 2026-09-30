@@ -1,0 +1,37 @@
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: var(--blue);
+  pointer-events: none;
+  overflow: hidden;
+}
+.bg__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--blue);
+}
+.bg__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+/* landing: a light vignette only */
+.bg__overlay--landing {
+  background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgb(3 5 30 / 0.35) 100%);
+}
+
+/* projects: heavy navy dim + slightly darker edges. Tune with --projects-dim. */
+.bg__overlay--projects {
+  background:
+    radial-gradient(ellipse at 50% 50%, transparent 40%, rgb(3 5 30 / 0.55) 100%),
+    rgb(3 5 30 / var(--projects-dim));
+}
+
+/* about: light-to-medium dark blue, keeps the white diagonal readable */
+.bg__overlay--about {
+  background: rgb(5 10 122 / var(--about-dim));
+}

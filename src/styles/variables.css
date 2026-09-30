@@ -1,0 +1,59 @@
+/* ==========================================================================
+   DESIGN TOKENS — the only place fonts and colors are defined.
+   Swap a font: change one line below (and the Google Fonts link in index.html).
+   ========================================================================== */
+:root {
+  /* fonts */
+  --font-display: 'Barlow Semi Condensed', 'Arial Narrow', sans-serif; /* big numbers / dates */
+  --font-label: 'Figtree', system-ui, sans-serif;                     /* labels, body */
+  --font-italic: 'Kanit', system-ui, sans-serif;                      /* slanted bits (use font-style: italic) */
+
+  /* menu + headings: Anton, set italic with 2px tracking (same as persona3-website) */
+  --font-heading: 'Anton', Impact, sans-serif;
+  --heading-weight: 400;
+  --heading-spacing: 2px;
+  --heading-transform: none;
+
+  /* palette */
+  --blue: #0a16c8;
+  --blue-deep: #050a7a;
+  --cyan: #22e5ff;
+  --white: #ffffff;
+  --row-navy: #14175e;
+  --selected-blue: #1a4fe0;
+  --red: #e8112d;
+  --pink-red: #ff2a5f;
+  --near-black: #05051a;
+  --text-light: #bcd8ff;
+  --moon-yellow: #ffe14d;
+  --menu-cyan: #3ce2ff;     /* unselected menu text */
+  --menu-red: #ff2a2a;      /* selected menu text, inside the white triangle */
+  --menu-red-dark: #6b0010; /* selected menu text, outside the triangle */
+  --menu-pink: rgb(235 80 120 / 0.85); /* triangle pop behind the white */
+  --edge-red: #c4001a;      /* thin stripes on the right screen edge */
+
+  --red-grad: linear-gradient(90deg, var(--red), var(--pink-red));
+
+  /* shapes */
+  --shadow-hard: 6px 6px 0 var(--near-black);
+  --shadow-hard-f: drop-shadow(6px 6px 0 var(--near-black));
+  --slant: 14px; /* horizontal offset for parallelogram cuts */
+
+  /* backgrounds */
+  --projects-dim: 0.72; /* darkness of the /projects overlay (0 - 1) */
+  --about-dim: 0.35;    /* darkness of the /about overlay (0 - 1) */
+
+  /* UI scale for big screens (content is sized in px up to ~1920px wide) */
+  --ui-zoom: 1;
+
+  /* motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@media (min-width: 2000px) and (min-height: 1000px) {
+  :root { --ui-zoom: 1.35; }
+}
+@media (min-width: 2800px) and (min-height: 1400px) {
+  :root { --ui-zoom: 1.85; }
+}
