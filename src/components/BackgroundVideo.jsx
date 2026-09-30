@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { routeBackgrounds, videos } from '../content.js'
 import { useTransitionNav } from '../lib/transition.js'
-import { preloadVideos, registerBgVideo, resolveVideoSrc } from '../lib/videoCache.js'
+import { preloadVideos, registerBgVideo, resolveVideoSrc, videoFileFor } from '../lib/videoCache.js'
 import '../styles/background.css'
 
 const bgFor = (pathname) => routeBackgrounds[pathname] || routeBackgrounds['/']
@@ -12,7 +12,7 @@ export default function BackgroundVideo() {
   const { displayedLocation } = useTransitionNav()
   const bg = bgFor(displayedLocation.pathname)
   const ref = useRef(null)
-  const [initial] = useState(() => videos[bg.video])
+  const [initial] = useState(() => ({ src: videoFileFor(bg.video), poster: videos[bg.video].poster }))
   const currentKey = useRef(bg.video)
 
   useEffect(() => {

@@ -21,15 +21,18 @@ export const showProjectsWatermark = false
 
 /* ---------- Background videos ------------------------------------------
    Files live in /public/videos. Swap a video by dropping a new file there
-   and changing the path here. Posters are optional first-frame JPGs.     */
+   and changing the path here. `src` is the 1080p file, `srcSmall` a lighter
+   720p one used on screens up to 900px wide. Posters are first-frame JPGs. */
 
 export const videos = {
   pauseMenu: {
     src: '/videos/pause-menu.mp4',
+    srcSmall: '/videos/pause-menu-720.mp4',
     poster: '/videos/pause-menu-poster.jpg',
   },
   skillsMenu: {
     src: '/videos/skills-menu.mp4',
+    srcSmall: '/videos/skills-menu-720.mp4',
     poster: '/videos/skills-menu-poster.jpg',
   },
 }
@@ -71,7 +74,8 @@ export const projectFields = {
   subtitle: (r) => r.language || '—',
   // the big right-aligned number where play time sits
   bigNumber: (r) => daysSince(r.created_at),
-  bigNumberLabel: 'DAYS OLD',
+  bigNumberLabel: '', // tiny label above the big number on the selected row ('' = none)
+  bigNumberSpoken: 'days old', // what screen readers say after the number
   // selected-row extras
   description: (r) => r.description || 'No description yet.',
   stars: 'stargazers_count',
