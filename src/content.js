@@ -6,7 +6,7 @@
 /* ---------- GitHub ---------------------------------------------------- */
 
 // PLACEHOLDER: your GitHub username (used for /projects data + the GITHUB menu item)
-export const githubUsername = 'YOUR_USERNAME'
+export const githubUsername = 'Wimmboo2'
 
 // 'profile' → GITHUB menu item opens github.com/{username} in a new tab (default)
 // 'page'    → GITHUB menu item navigates to the /github stub route (fill it in later)
@@ -128,20 +128,18 @@ export const fallbackRepos = [
 export const about = {
   // PLACEHOLDER: the intro, one entry per paragraph (the first one is shown bigger)
   intro: [
-    'Hi, my name is Wimmboo.',
-    'PLACEHOLDER: one or two more lines about you. Keep it short.',
+    'hi, im Wimmboo',
+    'i like AI, ML, web dev and games',
   ],
 
   // PLACEHOLDER: 3-4 short facts (each one is a line)
   facts: [
-    { title: 'Based in', text: 'Your city, your country' },
-    { title: 'Currently', text: 'Learning React animation and WebGL' },
     { title: 'Favorite game', text: 'Persona 3 Reload (obviously)' },
-    { title: 'Fun fact', text: 'Something short and specific about you' },
+    { title: 'Fun fact', text: 'i finish p5r 3 times (2ng+ n 1st playthrough)' },
   ],
 
   // PLACEHOLDER: shown at the very bottom, in this order
-  gameOst: { label: 'game ost', url: 'https://music.apple.com/PLACEHOLDER-game-ost-playlist' },
-  nonGameOst: { label: 'non-game ost', url: 'https://music.apple.com/PLACEHOLDER-non-game-ost-playlist' },
+  gameOst: { label: 'game ost', url: 'https://music.apple.com/id/playlist/castor/pl.u-GgA5klafoJ202lq' },
+  nonGameOst: { label: 'non-game ost', url: 'https://music.apple.com/id/playlist/caesar/pl.u-jV8908VCDrB9BkY' },
   discord: 'PLACEHOLDER_discord_username',
 }
