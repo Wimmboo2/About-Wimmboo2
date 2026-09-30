@@ -14,9 +14,10 @@ const itemVariants = {
   }),
 }
 
-// the highlight glides between options; the pink one trails on a softer spring
-const glide = { type: 'spring', stiffness: 380, damping: 34, mass: 0.9 }
-const trail = { type: 'spring', stiffness: 230, damping: 20, mass: 1 }
+// Cursor timing from Ultipuk's P3R pause-menu recreation (triangle_cursor.gd):
+// it snaps to the new option in 0.06s (linear), then the front triangle
+// "twitches" to 1.15x and back over 0.2s (see .menu__twitch in landing.css).
+const snap = { type: 'tween', duration: 0.06, ease: 'linear' }
 
 // P3R pause menu (look ported from blairxu13/persona3-website's P3Menu). One
 // white triangle, with a pink one behind it, is always on screen and slides to
@@ -102,8 +103,8 @@ export default function Menu() {
       <ul className="menu__list" ref={listRef}>
         {boxes && (
           <>
-            <Cursor box={boxes[selected]} transition={trail} className="menu__cursor menu__cursor--pink" />
-            <Cursor box={boxes[selected]} transition={glide} className="menu__cursor menu__cursor--white" />
+            <Cursor box={boxes[selected]} className="menu__cursor menu__cursor--pink" />
+            <Cursor box={boxes[selected]} className="menu__cursor menu__cursor--white" twitchKey={selected} />
           </>
         )}
         {menuItems.map((item, i) => {
@@ -169,7 +170,7 @@ export default function Menu() {
 }
 
 // One triangle layer, placed and skewed exactly like the selected option's box.
-function Cursor({ box, transition, className }) {
+function Cursor({ box, className, twitchKey }) {
   return (
     <motion.span
       className={className}
@@ -184,14 +185,17 @@ function Cursor({ box, transition, className }) {
         skewY: box.skewY,
         opacity: 1,
       }}
-      transition={{ ...transition, opacity: { duration: 0.2, delay: 0.35 } }}
+      transition={{ ...snap, opacity: { duration: 0.2, delay: 0.35 } }}
     >
       <motion.span
         className="menu__tri"
         initial={false}
         animate={{ width: box.triW, height: box.triH }}
-        transition={transition}
-      />
+        transition={snap}
+      >
+        {/* re-keyed on every selection so the twitch replays */}
+        <span key={twitchKey} className="menu__twitch" />
+      </motion.span>
     </motion.span>
   )
 }

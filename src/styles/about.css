@@ -1,12 +1,13 @@
-/* /about — laid out like P3R's submenu lists. 1 unit = 1px at 1440px wide. */
+/* /about — laid out like P3R's submenu lists.
+   Sizes are the mockup's px values × --u (0.8px per unit at 1440px wide). */
 .page--about {
-  --u: clamp(0.62px, 0.0694vw, 1.6px);
+  --u: clamp(0.5px, 0.0555vw, 1.28px);
   display: flex;
   align-items: center;
 }
 
 .about {
-  width: 52vw;
+  width: 42vw;
 }
 
 /* title sits on the band's top edge, like "PLAYLIST" */
@@ -21,8 +22,6 @@
   line-height: 1;
   letter-spacing: -0.01em;
   color: var(--p3r-title);
-  -webkit-text-stroke: calc(3 * var(--u)) var(--p3r-navy); /* thin: half of it sits under the fill */
-  paint-order: stroke fill;
 }
 
 .about__band {
@@ -59,7 +58,7 @@
 
 @media (max-width: 700px) {
   .page--about {
-    --u: 0.72px;
+    --u: 0.58px;
     align-items: flex-start;
     padding: 72px 0 48px;
   }
@@ -68,8 +67,7 @@
   }
   .about__title {
     margin-left: 16px;
-    font-size: clamp(40px, 12vw, 64px);
-    -webkit-text-stroke-width: 2px;
+    font-size: clamp(32px, 9.6vw, 51px);
   }
   .about__row {
     padding-left: 20px;

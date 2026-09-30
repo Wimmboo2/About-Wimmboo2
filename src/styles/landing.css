@@ -64,14 +64,25 @@
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
 }
-.menu__cursor--white .menu__tri {
+.menu__twitch {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  transform-origin: left center;
+}
+.menu__cursor--white .menu__twitch {
   background: var(--white);
+  animation: menu-twitch 0.2s linear;
 }
 .menu__cursor--pink .menu__tri {
-  background: var(--menu-pink);
   transform: translate(-12px, -40%);
+}
+.menu__cursor--pink .menu__twitch {
+  background: var(--menu-pink);
+}
+@keyframes menu-twitch {
+  50% { transform: scale(1.15); }
 }
 
 .menu__label {
@@ -125,7 +136,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .menu__list {
+  .menu__list,
+  .menu__cursor--white .menu__twitch {
     animation: none;
   }
 }
