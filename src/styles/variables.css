@@ -14,6 +14,10 @@
   --heading-spacing: 2px;
   --heading-transform: none;
 
+  /* P3R submenu type (free stand-ins for P3R's paid fonts) */
+  --font-title: 'Montserrat', 'Arial Black', sans-serif;               /* for Rodin Pro: heavy wide titles (900 italic) */
+  --font-list: 'Saira Semi Condensed', 'Arial Narrow', sans-serif;     /* for Skip Std B: list rows (600) */
+
   /* palette */
   --blue: #0a16c8;
   --blue-deep: #050a7a;
@@ -27,6 +31,13 @@
   --text-light: #bcd8ff;
   --moon-yellow: #ffe14d;
   --menu-cyan: #3ce2ff;     /* unselected menu text */
+  /* P3R submenu colors, sampled from the game's BGM screen */
+  --p3r-navy: #04073e;      /* list band */
+  --p3r-cyan: #36daf2;      /* list text */
+  --p3r-cyan-light: #9fe9f7; /* list labels */
+  --p3r-title: #aab6e0;     /* section title */
+  --p3r-select-line: #f01067; /* thin line on top of the selected row */
+  --p3r-select-text: #0a0a14;
   --menu-red: #ff2a2a;      /* selected menu text, inside the white triangle */
   --menu-red-dark: #6b0010; /* selected menu text, outside the triangle */
   --menu-pink: rgb(235 80 120 / 0.85); /* triangle pop behind the white */
@@ -40,7 +51,7 @@
 
   /* backgrounds */
   --projects-dim: 0.72; /* darkness of the /projects overlay (0 - 1) */
-  --about-dim: 0.35;    /* darkness of the /about overlay (0 - 1) */
+  --about-dim: 0.28;    /* darkness of the /about overlay (0 - 1) */
 
   /* UI scale for big screens (content is sized in px up to ~1920px wide) */
   --ui-zoom: 1;

@@ -4,7 +4,7 @@ import SaveRow, { SkeletonRow } from '../components/SaveRow.jsx'
 import { githubUsername, projectFields, showProjectsWatermark, timezone } from '../content.js'
 import { dateParts, moonPhase, timeOfDay } from '../lib/dates.js'
 import { useGithubRepos } from '../lib/github.js'
-import { useEscBack, useRevealed } from '../lib/transition.js'
+import { useEscBack } from '../lib/transition.js'
 import '../styles/projects.css'
 
 const read = (slot, repo) => (typeof slot === 'function' ? slot(repo) : repo[slot])
@@ -34,7 +34,6 @@ function toSlot(repo) {
 
 export default function Projects() {
   useEscBack()
-  const revealed = useRevealed()
   const { status, repos } = useGithubRepos(githubUsername, 3)
   const slots = useMemo(() => repos.map(toSlot), [repos])
   const [selected, setSelected] = useState(0)
@@ -73,7 +72,7 @@ export default function Projects() {
       <motion.div
         className="projects__wrap ui-zoom"
         initial={{ opacity: 0, x: 60 }}
-        animate={revealed ? { opacity: 1, x: 0 } : { opacity: 0, x: 60 }}
+        animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
       >
         <ol className="projects__list" aria-label="Recent GitHub repositories" aria-busy={status === 'loading'}>

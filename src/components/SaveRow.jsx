@@ -14,6 +14,7 @@ const spring = { type: 'spring', stiffness: 520, damping: 42, mass: 0.9 }
 // One P3R save slot. `slot` is the view model built in pages/Projects.jsx.
 const SaveRow = forwardRef(function SaveRow({ slot, index, selected, onSelect }, ref) {
   const { date } = slot
+  const hasBig = slot.bigNumber !== null && slot.bigNumber !== undefined && slot.bigNumber !== ''
   // selection state when the pointer went down: a tap on an unselected row
   // should only select it, even though focus selects it before `click` fires
   const wasSelected = useRef(null)
@@ -30,7 +31,7 @@ const SaveRow = forwardRef(function SaveRow({ slot, index, selected, onSelect },
         target="_blank"
         rel="noopener noreferrer"
         aria-current={selected ? 'true' : undefined}
-        aria-label={`${slot.title}. ${slot.subtitle}. Last push ${date.weekdayName} ${date.month}/${date.day}, ${slot.timeOfDay}. ${slot.bigNumber} ${(slot.bigNumberSpoken || '').toLowerCase()}.${selected ? ` ${slot.description} ${slot.stars} stars, ${slot.forks} forks. Opens on GitHub in a new tab.` : ''}`}
+        aria-label={`${slot.title}. ${slot.subtitle}. Last push ${date.weekdayName} ${date.month}/${date.day}, ${slot.timeOfDay}.${hasBig ? ` ${slot.bigNumber} ${(slot.bigNumberSpoken || '').toLowerCase()}.` : ''}${selected ? ` ${slot.description} ${slot.stars} stars, ${slot.forks} forks. Opens on GitHub in a new tab.` : ''}`}
         // hover-select only for a real mouse: on touch, the first tap selects
         onPointerEnter={(e) => e.pointerType === 'mouse' && onSelect()}
         onFocus={onSelect}
@@ -86,10 +87,12 @@ const SaveRow = forwardRef(function SaveRow({ slot, index, selected, onSelect },
               </span>
             </span>
           )}
-          <span className="row__big">
-            {selected && slot.bigNumberLabel && <span className="row__big-label">{slot.bigNumberLabel}</span>}
-            <span className="row__big-n">{slot.bigNumber}</span>
-          </span>
+          {hasBig && (
+            <span className="row__big">
+              {selected && slot.bigNumberLabel && <span className="row__big-label">{slot.bigNumberLabel}</span>}
+              <span className="row__big-n">{slot.bigNumber}</span>
+            </span>
+          )}
           {selected && <span className="row__tag">{slot.tag}</span>}
         </span>
       </a>
