@@ -6,8 +6,8 @@ import { waitForBgVideo } from '../lib/videoCache.js'
 import WaterArt from './WaterArt.jsx'
 import '../styles/water.css'
 
-const RISE_MS = 560
-const DRAIN_MS = 620
+const RISE_MS = 700
+const DRAIN_MS = 700
 const EASE = 'cubic-bezier(0.65, 0, 0.35, 1)'
 
 const prefersReducedMotion = () =>

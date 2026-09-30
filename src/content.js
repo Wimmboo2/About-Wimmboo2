@@ -74,7 +74,8 @@ export const projectFields = {
   subtitle: (r) => r.language || '—',
   // the big right-aligned number where play time sits
   bigNumber: (r) => daysSince(r.created_at),
-  bigNumberLabel: 'DAYS OLD',
+  bigNumberLabel: '', // tiny label above the big number on the selected row ('' = none)
+  bigNumberSpoken: 'days old', // what screen readers say after the number
   // selected-row extras
   description: (r) => r.description || 'No description yet.',
   stars: 'stargazers_count',

@@ -30,7 +30,7 @@ const SaveRow = forwardRef(function SaveRow({ slot, index, selected, onSelect },
         target="_blank"
         rel="noopener noreferrer"
         aria-current={selected ? 'true' : undefined}
-        aria-label={`${slot.title}. ${slot.subtitle}. Last push ${date.weekdayName} ${date.month}/${date.day}, ${slot.timeOfDay}. ${slot.bigNumber} ${slot.bigNumberLabel.toLowerCase()}.${selected ? ` ${slot.description} ${slot.stars} stars, ${slot.forks} forks. Opens on GitHub in a new tab.` : ''}`}
+        aria-label={`${slot.title}. ${slot.subtitle}. Last push ${date.weekdayName} ${date.month}/${date.day}, ${slot.timeOfDay}. ${slot.bigNumber} ${(slot.bigNumberSpoken || '').toLowerCase()}.${selected ? ` ${slot.description} ${slot.stars} stars, ${slot.forks} forks. Opens on GitHub in a new tab.` : ''}`}
         // hover-select only for a real mouse: on touch, the first tap selects
         onPointerEnter={(e) => e.pointerType === 'mouse' && onSelect()}
         onFocus={onSelect}
@@ -87,7 +87,7 @@ const SaveRow = forwardRef(function SaveRow({ slot, index, selected, onSelect },
             </span>
           )}
           <span className="row__big">
-            {selected && <span className="row__big-label">{slot.bigNumberLabel}</span>}
+            {selected && slot.bigNumberLabel && <span className="row__big-label">{slot.bigNumberLabel}</span>}
             <span className="row__big-n">{slot.bigNumber}</span>
           </span>
           {selected && <span className="row__tag">{slot.tag}</span>}

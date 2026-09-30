@@ -23,6 +23,7 @@ function toSlot(repo) {
     subtitle: read(f.subtitle, repo),
     bigNumber: read(f.bigNumber, repo),
     bigNumberLabel: f.bigNumberLabel,
+    bigNumberSpoken: f.bigNumberSpoken || f.bigNumberLabel,
     description: read(f.description, repo),
     stars: read(f.stars, repo) ?? 0,
     forks: read(f.forks, repo) ?? 0,
