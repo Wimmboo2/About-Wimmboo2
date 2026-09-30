@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { KeyHint, KeyHints } from '../components/KeyHint.jsx'
 import SaveRow, { SkeletonRow } from '../components/SaveRow.jsx'
 import { githubUsername, projectFields, showProjectsWatermark, timezone } from '../content.js'
 import { dateParts, moonPhase, timeOfDay } from '../lib/dates.js'
 import { useGithubRepos } from '../lib/github.js'
-import { useEscBack, useRevealed, useTransitionNav } from '../lib/transition.js'
+import { useEscBack, useRevealed } from '../lib/transition.js'
 import '../styles/projects.css'
 
 const read = (slot, repo) => (typeof slot === 'function' ? slot(repo) : repo[slot])
@@ -34,7 +33,6 @@ function toSlot(repo) {
 
 export default function Projects() {
   useEscBack()
-  const { back } = useTransitionNav()
   const revealed = useRevealed()
   const { status, repos } = useGithubRepos(githubUsername, 3)
   const slots = useMemo(() => repos.map(toSlot), [repos])
@@ -61,11 +59,6 @@ export default function Projects() {
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [slots])
-
-  const openSelected = () => {
-    const url = slots[selectedRef.current]?.url
-    if (url) window.open(url, '_blank', 'noopener,noreferrer')
-  }
 
   return (
     <main className="page page--projects">
@@ -98,11 +91,6 @@ export default function Projects() {
         </ol>
         {status === 'offline' && <p className="projects__offline">offline data</p>}
       </motion.div>
-
-      <KeyHints>
-        <KeyHint keys={['ENTER']} label="OPEN" onClick={openSelected} ariaLabel="Open selected repository" />
-        <KeyHint keys={['ESC']} label="BACK" onClick={back} ariaLabel="Back to menu" />
-      </KeyHints>
     </main>
   )
 }

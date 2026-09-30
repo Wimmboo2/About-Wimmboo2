@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { KeyHint, KeyHints } from '../components/KeyHint.jsx'
 import NumberTab from '../components/NumberTab.jsx'
 import SlantedPanel from '../components/SlantedPanel.jsx'
 import StatBar from '../components/StatBar.jsx'
 import TabStrip from '../components/TabStrip.jsx'
 import { about } from '../content.js'
-import { useEscBack, useRevealed, useTransitionNav } from '../lib/transition.js'
+import { useEscBack, useRevealed } from '../lib/transition.js'
 import '../styles/about.css'
 
 const TABS = [
@@ -95,7 +94,6 @@ const PANELS = { bio: Bio, skills: Skills, facts: Facts }
 
 export default function About() {
   useEscBack()
-  const { back } = useTransitionNav()
   const revealed = useRevealed()
   const [tab, setTab] = useState(0)
   const tabRef = useRef(0)
@@ -156,11 +154,6 @@ export default function About() {
           </AnimatePresence>
         </SlantedPanel>
       </motion.div>
-
-      <KeyHints>
-        <KeyHint keys={['←', '→']} label="SWITCH" onClick={() => switchTab(1)} ariaLabel="Next section" />
-        <KeyHint keys={['ESC']} label="BACK" onClick={back} ariaLabel="Back to menu" />
-      </KeyHints>
     </main>
   )
 }

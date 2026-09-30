@@ -21,62 +21,6 @@
   color: var(--row-navy);
 }
 
-/* ---------- KeyHint ---------- */
-.keyhints {
-  zoom: var(--ui-zoom);
-  position: fixed;
-  right: clamp(16px, 3vw, 48px);
-  bottom: clamp(14px, 3vh, 36px);
-  z-index: 20;
-  display: flex;
-  gap: clamp(14px, 2vw, 28px);
-  align-items: center;
-}
-.keyhint {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 2px 4px;
-  background: none;
-  border: 0;
-  cursor: default;
-  filter: drop-shadow(2px 2px 0 var(--near-black));
-}
-button.keyhint {
-  cursor: pointer;
-}
-.keyhint__key {
-  display: inline-grid;
-  place-items: center;
-  min-width: 26px;
-  height: 26px;
-  padding: 0 4px;
-  border-radius: 50%;
-  background: var(--white);
-  color: var(--near-black);
-  font-family: var(--font-label);
-  font-weight: 800;
-  font-size: 13px;
-  line-height: 1;
-}
-.keyhint__key--wide {
-  border-radius: 13px;
-  font-size: 10px;
-  letter-spacing: 0.02em;
-}
-.keyhint__label {
-  font-family: var(--font-italic);
-  font-style: italic;
-  font-weight: 600;
-  font-size: 17px;
-  letter-spacing: 0.04em;
-  color: var(--white);
-  margin-left: 2px;
-}
-button.keyhint:hover .keyhint__label {
-  color: var(--cyan);
-}
-
 /* ---------- WeekdayBadge ---------- */
 .weekday {
   display: inline-block;
