@@ -5,11 +5,20 @@ import { videos } from '../content.js'
 const blobUrls = {}
 let started = false
 
+// 720p on phones / small screens, 1080p elsewhere
+const small = () =>
+  typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches
+
+export const videoFileFor = (key) => {
+  const v = videos[key]
+  return (small() && v?.srcSmall) || v?.src
+}
+
 export function preloadVideos() {
   if (started || typeof fetch === 'undefined') return
   started = true
-  Object.entries(videos).forEach(([key, v]) => {
-    fetch(v.src)
+  Object.keys(videos).forEach((key) => {
+    fetch(videoFileFor(key))
       .then((res) => (res.ok ? res.blob() : Promise.reject(res.status)))
       .then((blob) => {
         blobUrls[key] = URL.createObjectURL(blob)
@@ -20,7 +29,7 @@ export function preloadVideos() {
   })
 }
 
-export const resolveVideoSrc = (key) => blobUrls[key] || videos[key]?.src
+export const resolveVideoSrc = (key) => blobUrls[key] || videoFileFor(key)
 
 /* ---- the single persistent <video>: registry so the transition can wait for it ---- */
 

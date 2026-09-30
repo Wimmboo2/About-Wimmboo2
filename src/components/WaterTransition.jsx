@@ -6,8 +6,8 @@ import { waitForBgVideo } from '../lib/videoCache.js'
 import WaterArt from './WaterArt.jsx'
 import '../styles/water.css'
 
-const RISE_MS = 900
-const DRAIN_MS = 900
+const RISE_MS = 560
+const DRAIN_MS = 620
 const EASE = 'cubic-bezier(0.65, 0, 0.35, 1)'
 
 const prefersReducedMotion = () =>
@@ -53,7 +53,7 @@ export default function WaterTransition({ children, knownPaths }) {
       setPhase('covered')
       setDisplayedLocation(latestLocation.current)
     })
-    await waitForBgVideo(700)
+    await waitForBgVideo(450)
     await nextFrame()
     await nextFrame()
 

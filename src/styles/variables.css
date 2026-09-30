@@ -30,7 +30,6 @@
   --menu-red: #ff2a2a;      /* selected menu text, inside the white triangle */
   --menu-red-dark: #6b0010; /* selected menu text, outside the triangle */
   --menu-pink: rgb(235 80 120 / 0.85); /* triangle pop behind the white */
-  --edge-red: #c4001a;      /* thin stripes on the right screen edge */
 
   --red-grad: linear-gradient(90deg, var(--red), var(--pink-red));
 

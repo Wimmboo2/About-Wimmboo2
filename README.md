@@ -28,9 +28,11 @@ npm run build    # static output in dist/ (vercel.json handles SPA routes)
 
 ## Videos
 
-- `public/videos/pause-menu.mp4`: from `assets/Persona 3 Reload's Pause Menu (Clean).mp4`. The original starts with a ~2s white intro splash, so this is only the underwater part (1.9s to 6.1s), crossfaded into a seamless 3.4s loop.
-- `public/videos/skills-menu.mp4`: from `assets/Persona 3 Reload - Clean Skills Menu Loop (Wallpaper Engine).mp4`, same video with the audio track removed.
+- `public/videos/pause-menu.mp4`: made from the pause-menu clip (originally `Persona 3 Reload's Pause Menu (Clean).mp4`). The clip opens with a white splash, so only the underwater part is used, turned into a smooth 12 s "bob" loop: the float plays forward then back with the speed easing out at each end, so there's no seam or crossfade ghosting.
+- `public/videos/skills-menu.mp4`: the skills-menu clip (originally `Persona 3 Reload - Clean Skills Menu Loop (Wallpaper Engine).mp4`), which already loops.
+- Both are deblocked, denoised and upscaled from 720p to 1080p. The `-720.mp4` versions are lighter copies used on screens up to 900px wide.
 - `*-poster.jpg`: first frame of each, shown until the video can play.
+- `public/images/water-texture.jpg`: the water in the page transition, cut from the pause-menu video itself so it matches the background.
 
 The site never plays sound: the audio tracks are removed and the `<video>` is muted.
 The `assets/` folder is no longer used by the site, so you can delete it if you want the repo smaller.

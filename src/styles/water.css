@@ -1,10 +1,11 @@
-/* Water transition overlay: cel-shaded, matching the pause-menu video ---- */
+/* Water transition overlay, built from the pause-menu video's own water --- */
 
 .water {
-  --wave-h: clamp(110px, 17vh, 190px);
-  --surface: #25cbee;      /* turquoise band just under the surface */
-  --surface-hi: #9ff4ff;   /* light ripple patches / back wave */
-  --surface-lo: #1590e6;   /* darker ripple streaks */
+  --wave-h: clamp(90px, 13vh, 150px);
+  /* colors sampled from the video (public/images/water-texture.jpg) */
+  --surface: #19f7fc;      /* top row of the texture: the front wave matches it exactly */
+  --surface-mid: #47fdfd;  /* the brightest ripple color */
+  --surface-hi: #b8fdff;   /* back wave, a touch lighter */
   position: fixed;
   inset: 0;
   z-index: 100;
@@ -56,71 +57,45 @@
 }
 .water__wave--back { animation-duration: 2.8s; }
 .water__wave--back .water__fill { fill: var(--surface-hi); }
-.water__wave--back .water__crest { stroke: var(--white); }
+.water__wave--back .water__crest { stroke: var(--white); stroke-width: 2; }
 
 .water__wave--mid { animation-duration: 3.6s; animation-direction: reverse; }
-.water__wave--mid .water__fill { fill: #5fe3f7; }
-.water__wave--mid .water__crest { stroke: var(--white); stroke-width: 2; }
+.water__wave--mid .water__fill { fill: var(--surface-mid); }
+.water__wave--mid .water__crest { stroke: none; }
 
 .water__wave--front { animation-duration: 2.2s; }
 .water__wave--front .water__fill { fill: var(--surface); }
-.water__wave--front .water__crest { stroke: #d9fbff; stroke-width: 2; }
+.water__wave--front .water__crest { stroke: none; }
 
 @keyframes water-drift {
   from { transform: translate3d(0, 0, 0); }
   to   { transform: translate3d(-50%, 0, 0); }
 }
 
-/* ---- body: turquoise under the surface → deep blue, with hard-ish bands ---- */
+/* ---- body: the video's own water, tiled and drifting slowly ---- */
 .water__body {
   position: relative;
   flex: 1;
   margin-top: -2px; /* overlap the front wave so no seam shows */
   overflow: hidden;
-  background: linear-gradient(
-    180deg,
-    var(--surface) 0%,
-    #1fb2ee 9%,
-    #1a8ceb 20%,
-    #1662e2 38%,
-    #0f3ad6 58%,
-    var(--blue) 76%,
-    var(--blue-deep) 100%
-  );
+  background: linear-gradient(180deg, var(--surface) 0%, #1087e6 28%, #004dc1 46%, #0022b4 74%, #000093 100%);
 }
-
-.water__ripples {
+.water__texture {
+  /* texture is 1640×1080, stitched from two moments of the video (no repeats).
+     It fills the height; it only stretches sideways on very wide screens. */
   position: absolute;
-  left: 0;
   top: 0;
-  width: 200%;
-  height: 26%;
+  bottom: 0;
+  left: -3%;
+  width: 106%;
+  background: url('/images/water-texture.jpg') no-repeat center top / max(100%, 151.85vh) 100%;
   will-change: transform;
-  animation: water-drift 11s linear infinite;
+  animation: water-sway 5s ease-in-out infinite alternate;
   animation-play-state: paused;
 }
-.water__ripples svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-.water__ripple-light { fill: var(--surface-hi); opacity: 0.9; }
-.water__ripple-dark  { fill: var(--surface-lo); opacity: 0.55; }
-
-.water__swaths {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  fill: var(--surface-hi);
-  opacity: 0.18;
-  will-change: transform;
-  animation: swath-sway 3.2s ease-in-out infinite alternate;
-  animation-play-state: paused;
-}
-@keyframes swath-sway {
-  from { transform: translate3d(-1.5%, 0, 0) skewX(-2deg); }
-  to   { transform: translate3d(1.5%, -2%, 0) skewX(2deg); }
+@keyframes water-sway {
+  from { transform: translate3d(-1.5%, 0, 0); }
+  to   { transform: translate3d(1.5%, 0, 0); }
 }
 
 /* ---- ring-shaded bubbles ---- */
@@ -145,8 +120,8 @@
 .water__bubble svg {
   display: block;
 }
-.bub__rim  { fill: #aaf0ff; }
-.bub__core { fill: #3fa9f2; }
+.bub__rim  { fill: #9ff6ff; }
+.bub__core { fill: #2fb7f5; }
 .bub__hi   { fill: var(--white); }
 
 @keyframes bubble-rise {
@@ -162,8 +137,7 @@
 
 /* animations only run while the water is on screen */
 .water.is-active .water__wave,
-.water.is-active .water__ripples,
-.water.is-active .water__swaths,
+.water.is-active .water__texture,
 .water.is-active .water__bubble,
 .water.is-active .water__bubble-sway {
   animation-play-state: running;
@@ -174,8 +148,7 @@
     background: var(--blue);
   }
   .water__wave,
-  .water__ripples,
-  .water__swaths,
+  .water__texture,
   .water__bubble,
   .water__bubble-sway {
     animation: none;
