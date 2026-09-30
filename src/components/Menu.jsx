@@ -100,7 +100,7 @@ export default function Menu() {
                   <motion.span
                     className="menu__scale"
                     initial={false}
-                    animate={{ scale: isSel ? 1 : 0.84 }}
+                    animate={{ scale: isSel ? 1 : 0.9 }}
                     transition={{ type: 'spring', stiffness: 600, damping: 30 }}
                   >
                     {isSel && (

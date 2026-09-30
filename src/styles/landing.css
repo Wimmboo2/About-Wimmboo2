@@ -9,7 +9,7 @@
   right: clamp(8%, 21vw, 30%);
   top: 50%;
   transform: translateY(-50%);
-  font-size: clamp(2.6rem, 7.6vw, 12rem);
+  font-size: clamp(2rem, 4.3vw, 6.4rem);
 }
 .menu__list {
   list-style: none;
@@ -21,7 +21,7 @@
 }
 .menu__item {
   margin-left: var(--x);
-  margin-top: -0.12em; /* stacked tight, letters nearly touching */
+  margin-top: 0.1em; /* stacked tight, letters nearly touching */
 }
 .menu__bob {
   animation: menu-bob 3.4s ease-in-out infinite;
@@ -55,11 +55,13 @@
   display: inline-block;
   padding: 0 0.12em;
   font-family: var(--font-heading);
+  font-weight: var(--heading-weight);
+  font-style: italic;
   font-size: 1em;
   line-height: 1;
-  letter-spacing: 0.005em;
+  letter-spacing: 0.01em;
   white-space: nowrap;
-  transform: skewX(-13deg); /* heavy italic, like the game */
+  transform: var(--heading-transform);
   color: #36a2e6;
   text-shadow: 0.05em 0.05em 0 rgb(6 18 130 / 0.55);
   transition: color 90ms linear, text-shadow 90ms linear;
@@ -90,7 +92,7 @@
   .menu {
     right: auto;
     left: 8%;
-    font-size: clamp(2.2rem, 12vw, 4rem);
+    font-size: clamp(1.8rem, 9vw, 2.8rem);
   }
 }
 

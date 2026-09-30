@@ -16,7 +16,7 @@ npm run build    # static output in dist/ (vercel.json handles SPA routes)
 
 | What | Where |
 | --- | --- |
-| Your name, the dialogue lines on /about, facts, GitHub username, timezone, fallback repos | `src/content.js` (search for `PLACEHOLDER`) |
+| Your name, the intro lines on /about, facts, GitHub username, timezone, fallback repos | `src/content.js` (search for `PLACEHOLDER`) |
 | GITHUB menu behavior (`'profile'` opens github.com in a new tab, `'page'` uses the `/github` stub) | `githubMode` in `src/content.js` |
 | Which data goes in which slot of a project row (e.g. swap "days old" for stars) | `projectFields` in `src/content.js` |
 | Background videos | Put files in `public/videos/`, then update `videos` in `src/content.js`. Which route uses which video + overlay is `routeBackgrounds` in the same file. |

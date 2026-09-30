@@ -7,7 +7,11 @@
   --font-display: 'Barlow Semi Condensed', 'Arial Narrow', sans-serif; /* big numbers / dates */
   --font-label: 'Figtree', system-ui, sans-serif;                     /* labels, body */
   --font-italic: 'Kanit', system-ui, sans-serif;                      /* slanted bits (use font-style: italic) */
-  --font-heading: 'Anton', Impact, sans-serif;                        /* landing menu + page headings */
+
+  /* the P3R menu lettering: black italic, pushed further over and stretched tall */
+  --heading-weight: 900;
+  --heading-transform: skewX(-9deg) scaleY(1.18);
+  --font-heading: 'Roboto Condensed', 'Arial Narrow', sans-serif;     /* menu + headings (black italic) */
 
   /* palette */
   --blue: #0a16c8;

@@ -120,9 +120,7 @@ export const fallbackRepos = [
 /* ---------- /about ----------------------------------------------------- */
 
 export const about = {
-  // PLACEHOLDER: the name shown on the dialogue name tag
-  name: 'WIMMBOO',
-  // PLACEHOLDER: what the dialogue box says, one entry per paragraph (typed out)
+  // PLACEHOLDER: the intro, one entry per paragraph (the first one is shown bigger)
   intro: [
     'Hi, my name is Wimmboo.',
     'PLACEHOLDER: one or two more lines about you. Keep it short.',

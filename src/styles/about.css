@@ -1,198 +1,144 @@
 .page--about {
+  --slab-w: 56vw;
+  --slab-bottom: 78%; /* where the slanted edge meets the bottom of the screen */
+  --pad-x: 7vw;
   display: flex;
   align-items: center;
 }
 
-/* everything stays in the left ~55% so the character stays visible */
-.about {
-  width: calc(min(55vw, 1500px) / var(--ui-zoom));
-  margin-left: calc(clamp(16px, 5vw, 200px) / var(--ui-zoom));
-  display: flex;
-  flex-direction: column;
-  gap: clamp(18px, 3vh, 34px);
-  padding: 32px 0 60px;
-}
-
-/* ---------- heading: same red-on-white-wedge as the selected menu item ---------- */
-.about__heading {
-  position: relative;
-  align-self: flex-start;
-  margin: 0;
-  font-size: clamp(3rem, 6.4vw, 6.6rem);
-  font-weight: 400;
-  transform: rotate(6deg);
-  transform-origin: left center;
-}
-
-/* ---------- dialogue window ---------- */
-.dlg {
-  position: relative;
-  padding-top: 26px;
-  cursor: default;
-}
-.dlg__name {
+/* ---------- the slab ---------- */
+.slab {
   position: absolute;
-  z-index: 2;
   top: 0;
-  left: 22px;
-  margin: 0;
-  padding: 6px 26px 5px 18px;
-  background: var(--white);
-  clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
-  filter: drop-shadow(4px 4px 0 var(--near-black));
-  transform: rotate(-3deg);
-}
-.dlg__name::after {
-  /* cyan stripe under the name, a P3R staple */
-  content: '';
-  position: absolute;
-  left: 10px;
-  right: 6px;
   bottom: 0;
-  height: 4px;
-  background: var(--cyan);
+  left: 0;
+  width: var(--slab-w);
+  will-change: transform;
 }
-.dlg__name-text {
-  display: inline-block;
-  font-family: var(--font-heading);
-  font-weight: 400;
-  font-size: clamp(22px, 2vw, 30px);
-  line-height: 1;
-  letter-spacing: 0.02em;
-  color: var(--blue-deep);
-  transform: skewX(-13deg);
-}
-
-.dlg__box {
-  position: relative;
-  min-height: 150px;
-  padding: 34px 48px 30px 40px;
-  background: rgb(4 8 50 / 0.9);
-  clip-path: polygon(0 0, 100% 0, calc(100% - 22px) 100%, 0 100%);
-  border-left: 6px solid var(--cyan);
-  box-shadow:
-    inset 0 2px 0 var(--text-light),
-    inset 0 -2px 0 var(--text-light);
-}
-.dlg__text p {
-  margin: 0 0 0.55em;
-  font-family: var(--font-label);
-  font-weight: 600;
-  font-size: clamp(17px, 1.45vw, 23px);
-  line-height: 1.5;
-  color: var(--white);
-}
-.dlg__text p:first-of-type {
-  font-weight: 800;
-  font-size: clamp(20px, 1.8vw, 28px);
-}
-.dlg__ghost {
-  color: transparent; /* reserves space so the box doesn't grow while typing */
-}
-.dlg__next {
+.slab > span {
   position: absolute;
-  right: 44px;
-  bottom: 16px;
-  width: 18px;
-  height: 13px;
-  background: var(--cyan);
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
-  animation: dlg-next 0.7s steps(2, jump-none) infinite alternate;
+  inset: 0;
 }
-@keyframes dlg-next {
-  from { transform: translateY(0); }
-  to   { transform: translateY(5px); }
+.slab__white {
+  background: var(--white);
+  clip-path: polygon(0 0, 100% 0, var(--slab-bottom) 100%, 0 100%);
+}
+.slab__cyan {
+  background: var(--cyan);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, calc(var(--slab-bottom) - 14px) 100%, 0 100%);
+}
+.slab__fill {
+  background: rgb(5 8 48 / 0.95);
+  clip-path: polygon(0 0, calc(100% - 20px) 0, calc(var(--slab-bottom) - 20px) 100%, 0 100%);
 }
 
-/* ---------- facts: P3R list ---------- */
-.facts__h {
-  display: inline-block;
-  margin: 0 0 10px 6px;
-  padding: 4px 22px 3px 14px;
-  background: var(--near-black);
-  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
-  font-family: var(--font-label);
-  font-weight: 800;
-  font-size: 14px;
-  letter-spacing: 0.2em;
+/* ---------- content ---------- */
+.about {
+  position: relative;
+  width: calc(min(34vw, 620px) / var(--ui-zoom));
+  margin-left: calc(var(--pad-x) / var(--ui-zoom));
+  padding: 40px 0;
+}
+
+.about__title {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 0 0 22px;
+  font-family: var(--font-heading);
+  font-weight: var(--heading-weight);
+  font-style: italic;
+  font-size: clamp(34px, 3.6vw, 58px);
+  line-height: 1;
+  letter-spacing: 0.01em;
   color: var(--white);
 }
-.facts__list {
+.about__title::after {
+  /* thin rule running off to the slab edge */
+  content: '';
+  flex: 1;
+  height: 2px;
+  margin-right: -8vw;
+  background: var(--cyan);
+}
+
+.about__intro {
+  margin-bottom: 30px;
+}
+.about__intro p {
+  margin: 0 0 0.6em;
+  max-width: 46ch;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: clamp(15px, 1.1vw, 18px);
+  line-height: 1.6;
+  color: #d4e3ff;
+}
+.about__intro .about__lead {
+  font-weight: 700;
+  font-size: clamp(19px, 1.5vw, 24px);
+  line-height: 1.35;
+  color: var(--white);
+}
+
+/* ---------- facts: rows inside the same slab ---------- */
+.about__facts {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-.facts__item {
-  /* slight stagger down the list, like the game's menus */
-  margin-left: calc(var(--i) * 10px);
+  border-top: 1px solid rgb(188 216 255 / 0.22);
 }
 .fact {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(7em, 32%) 1fr;
+  grid-template-columns: 9.5em 1fr;
   align-items: center;
-  gap: 16px;
-  min-height: 50px;
-  padding: 8px 40px 8px 26px;
+  gap: 14px;
+  min-height: 46px;
+  padding: 6px 12px;
+  border-bottom: 1px solid rgb(188 216 255 / 0.22);
   outline: none;
   cursor: default;
-  background: rgb(4 8 50 / 0.82);
-  clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
-}
-.fact::before {
-  /* thin cyan tick on the left edge */
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 5px;
-  background: var(--selected-blue);
 }
 
-/* selected row: white bar with a red copy peeking out, like the menu wedge */
-.fact__hl {
+/* P3R cursor: a white bar that runs off the left edge, red copy underneath */
+.fact__bar {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: calc(var(--pad-x) * -1 - 4px);
+  right: -18px;
+}
+.fact__bar-red,
+.fact__bar-white {
   position: absolute;
   inset: 0;
-  transform-origin: left center;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
 }
-.fact__hl-red,
-.fact__hl-white {
-  position: absolute;
-  inset: 0;
-  clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
-}
-.fact__hl-red {
+.fact__bar-red {
   background: var(--red);
+  transform: translate(5px, 4px);
 }
-.fact__hl-white {
+.fact__bar-white {
   background: var(--white);
-  inset: 0 5px 4px 0;
-}
-.fact.is-selected::before {
-  background: var(--red);
-  z-index: 1;
 }
 
 .fact__title {
   position: relative;
   font-family: var(--font-heading);
-  font-size: clamp(18px, 1.5vw, 24px);
+  font-weight: var(--heading-weight);
+  font-style: italic;
+  font-size: clamp(16px, 1.25vw, 20px);
   line-height: 1;
   letter-spacing: 0.02em;
   text-transform: uppercase;
-  color: #36a2e6;
-  transform: skewX(-13deg);
-  transform-origin: left center;
+  color: var(--cyan);
 }
 .fact__text {
   position: relative;
   font-family: var(--font-label);
   font-weight: 600;
-  font-size: clamp(15px, 1.2vw, 19px);
+  font-size: clamp(14px, 1.05vw, 17px);
   color: var(--white);
 }
 .fact.is-selected .fact__title {
@@ -201,41 +147,45 @@
 .fact.is-selected .fact__text {
   color: var(--blue-deep);
 }
-.fact:focus-visible .fact__hl-red {
+.fact:focus-visible .fact__bar-red {
   background: var(--pink-red);
+  transform: translate(7px, 6px);
 }
 
-/* ---------- small screens ---------- */
+/* ---------- small screens: slab becomes a full-width sheet ---------- */
 @media (max-width: 700px) {
   .page--about {
+    --slab-w: 100vw;
+    --slab-bottom: 100%;
+    --pad-x: 20px;
     align-items: flex-start;
+  }
+  .slab {
+    position: fixed;
+  }
+  .slab__white,
+  .slab__cyan,
+  .slab__fill {
+    clip-path: none;
+  }
+  .slab__white,
+  .slab__cyan {
+    display: none;
   }
   .about {
     width: auto;
-    margin: 0 16px;
-    padding: 64px 0 60px;
+    margin: 0 20px;
+    padding: 56px 0 48px;
   }
-  .about__heading {
-    font-size: clamp(2.4rem, 13vw, 3.4rem);
-  }
-  .about__heading .blade {
-    width: 130%;
-  }
-  .dlg__box {
-    padding: 30px 30px 26px 22px;
+  .about__title::after {
+    margin-right: -20px;
   }
   .fact {
     grid-template-columns: 1fr;
-    gap: 4px;
-    padding: 10px 30px 10px 20px;
+    gap: 5px;
+    padding: 10px 10px;
   }
-  .facts__item {
-    margin-left: calc(var(--i) * 4px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .dlg__next {
-    animation: none;
+  .fact__bar {
+    right: -20px;
   }
 }
