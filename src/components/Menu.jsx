@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { githubMode, githubUsername, menuItems } from '../content.js'
-import { useRevealed, useTransitionNav } from '../lib/transition.js'
+import { useTransitionNav } from '../lib/transition.js'
 
 const githubUrl = `https://github.com/${githubUsername}`
 
@@ -24,7 +24,6 @@ const trail = { type: 'spring', stiffness: 230, damping: 20, mass: 1 }
 // triangle, dark outside. Unselected options fade with distance.
 export default function Menu() {
   const { go, busy } = useTransitionNav()
-  const revealed = useRevealed()
   const [selected, setSelected] = useState(0)
   const selectedRef = useRef(0)
   selectedRef.current = selected
@@ -103,8 +102,8 @@ export default function Menu() {
       <ul className="menu__list" ref={listRef}>
         {boxes && (
           <>
-            <Cursor box={boxes[selected]} transition={trail} className="menu__cursor menu__cursor--pink" revealed={revealed} />
-            <Cursor box={boxes[selected]} transition={glide} className="menu__cursor menu__cursor--white" revealed={revealed} />
+            <Cursor box={boxes[selected]} transition={trail} className="menu__cursor menu__cursor--pink" />
+            <Cursor box={boxes[selected]} transition={glide} className="menu__cursor menu__cursor--white" />
           </>
         )}
         {menuItems.map((item, i) => {
@@ -128,7 +127,7 @@ export default function Menu() {
               custom={i}
               variants={itemVariants}
               initial="hidden"
-              animate={revealed ? 'shown' : 'hidden'}
+              animate="shown"
               onAnimationComplete={measure}
             >
               <a
@@ -170,7 +169,7 @@ export default function Menu() {
 }
 
 // One triangle layer, placed and skewed exactly like the selected option's box.
-function Cursor({ box, transition, className, revealed }) {
+function Cursor({ box, transition, className }) {
   return (
     <motion.span
       className={className}
@@ -183,9 +182,9 @@ function Cursor({ box, transition, className, revealed }) {
         height: box.h,
         skewX: box.skew,
         skewY: box.skewY,
-        opacity: revealed ? 1 : 0,
+        opacity: 1,
       }}
-      transition={{ ...transition, opacity: { duration: 0.2, delay: revealed ? 0.35 : 0 } }}
+      transition={{ ...transition, opacity: { duration: 0.2, delay: 0.35 } }}
     >
       <motion.span
         className="menu__tri"

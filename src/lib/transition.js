@@ -2,16 +2,10 @@ import { createContext, useContext, useEffect } from 'react'
 
 export const TransitionContext = createContext(null)
 
-// { displayedLocation, phase, busy, go(path), back() }
+// { displayedLocation, incoming, busy, go(path), back(), incomingRef, snapshotRef }
 export const useTransitionNav = () => useContext(TransitionContext)
 
-// True once the page is visible (the water has started draining or is idle).
-export function useRevealed() {
-  const { phase } = useTransitionNav()
-  return phase === 'idle' || phase === 'draining'
-}
-
-// Esc → back to landing (through the water transition).
+// Esc → back to landing (through the transition).
 export function useEscBack() {
   const { back } = useTransitionNav()
   useEffect(() => {

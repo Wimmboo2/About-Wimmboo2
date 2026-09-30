@@ -31,26 +31,40 @@ export function preloadVideos() {
 
 export const resolveVideoSrc = (key) => blobUrls[key] || videoFileFor(key)
 
-/* ---- the single persistent <video>: registry so the transition can wait for it ---- */
+/* ---- the single persistent <video>: registry so the transition can use it ---- */
 
 let bgVideoEl = null
 export const registerBgVideo = (el) => {
   bgVideoEl = el
 }
 
-// Resolves once the background video has a frame to show (or after `timeout` ms).
-export function waitForBgVideo(timeout = 700) {
+export const pauseBgVideo = () => bgVideoEl?.pause()
+export const resumeBgVideo = () => bgVideoEl?.play().catch(() => {})
+
+// Draw the background video's current frame into `canvas` exactly as it
+// appears on screen (object-fit: cover, centered). Optional `zoom` crops to
+// the centered fraction of the screen (the P3R blot uses 0.6), and `tint`
+// multiplies the colors (the blot uses r×0.25, g×0.5, b×1).
+export function drawBgFrame(canvas, { zoom = 1, tint } = {}) {
+  const ctx = canvas.getContext('2d')
+  const W = canvas.width
+  const H = canvas.height
   const el = bgVideoEl
-  if (!el || el.readyState >= 3) return Promise.resolve()
-  return new Promise((resolve) => {
-    const done = () => {
-      clearTimeout(t)
-      el.removeEventListener('canplay', done)
-      el.removeEventListener('playing', done)
-      resolve()
-    }
-    const t = setTimeout(done, timeout)
-    el.addEventListener('canplay', done)
-    el.addEventListener('playing', done)
-  })
+  if (el && el.readyState >= 2 && el.videoWidth) {
+    const vw = el.videoWidth
+    const vh = el.videoHeight
+    const scale = Math.max(W / vw, H / vh) // object-fit: cover
+    const sw = (W / scale) * zoom
+    const sh = (H / scale) * zoom
+    ctx.drawImage(el, (vw - sw) / 2, (vh - sh) / 2, sw, sh, 0, 0, W, H)
+  } else {
+    ctx.fillStyle = '#0a16c8'
+    ctx.fillRect(0, 0, W, H)
+  }
+  if (tint) {
+    ctx.globalCompositeOperation = 'multiply'
+    ctx.fillStyle = tint
+    ctx.fillRect(0, 0, W, H)
+    ctx.globalCompositeOperation = 'source-over'
+  }
 }
