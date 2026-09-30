@@ -66,11 +66,7 @@
   margin: 0;
 }
 .about__text .about__lead {
-  font-weight: 700;
-  font-size: clamp(19px, 1.5vw, 24px);
-  line-height: 1.35;
-  color: var(--white);
-  margin-bottom: 0.3em;
+  margin: 0;
 }
 .about__lines {
   list-style: none;

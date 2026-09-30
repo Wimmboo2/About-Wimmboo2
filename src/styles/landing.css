@@ -8,15 +8,18 @@
   /* 1 unit = 1px on a 1440px-wide screen */
   --u: clamp(0.5px, 0.0694vw, 1.5px);
   position: absolute;
-  right: clamp(4%, 12vw, 18%);
+  left: 58%;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
   padding: 48px;
 }
 .menu__list {
+  position: relative;
   list-style: none;
   margin: 0;
   padding: 0;
+  animation: menu-bob 3.6s ease-in-out infinite; /* the whole menu floats together */
+  will-change: transform;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,10 +28,6 @@
 .menu__item {
   font-size: calc(var(--size) * var(--u));
 }
-.menu__bob {
-  animation: menu-bob 3.6s ease-in-out infinite;
-  will-change: transform;
-}
 @keyframes menu-bob {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-3px); }
@@ -36,6 +35,7 @@
 
 .menu__link {
   position: relative;
+  z-index: 1; /* above the sliding highlight */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,37 +51,27 @@
   isolation: isolate;
 }
 
-/* the triangle (size + clip set inline from the item's font size) */
-.menu__white,
-.menu__pink {
+/* the sliding highlight: placed + skewed like the selected option (set in Menu.jsx) */
+.menu__cursor {
   position: absolute;
-  top: 50%;
   left: 0;
-  transform-origin: left center;
+  top: 0;
+  z-index: 0;
   pointer-events: none;
 }
-.menu__white {
-  z-index: 2;
+.menu__tri {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+.menu__cursor--white .menu__tri {
   background: var(--white);
-  transform: translateY(-50%) scaleX(0);
-  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.menu__link.is-selected .menu__white {
-  transform: translateY(-50%) scaleX(1);
-}
-.menu__pink {
-  z-index: 1;
+.menu__cursor--pink .menu__tri {
   background: var(--menu-pink);
-  transform: translateY(-40%) translateX(-12px) scaleX(0);
-}
-.menu__pink.is-on {
-  animation: menu-pop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-@keyframes menu-pop {
-  0%   { transform: translateY(-40%) translateX(-12px) scaleX(0) scaleY(1); }
-  55%  { transform: translateY(-46%) translateX(-15px) scaleX(1.22) scaleY(1.18); }
-  75%  { transform: translateY(-39%) translateX(-11px) scaleX(0.96) scaleY(0.97); }
-  100% { transform: translateY(-40%) translateX(-12px) scaleX(1) scaleY(1); }
+  transform: translate(-12px, -40%);
 }
 
 .menu__label {
@@ -119,10 +109,6 @@
   opacity: 1;
 }
 
-/* keyboard focus: the selected look plus a pink edge on the triangle */
-.menu__link:focus-visible .menu__pink {
-  background: var(--pink-red);
-}
 
 @media (max-width: 700px) {
   .page--landing {
@@ -139,11 +125,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .menu__bob {
+  .menu__list {
     animation: none;
-  }
-  .menu__pink.is-on {
-    animation: none;
-    transform: translateY(-40%) translateX(-12px) scaleX(1);
   }
 }

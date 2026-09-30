@@ -98,48 +98,9 @@
   to   { transform: translate3d(1.5%, 0, 0); }
 }
 
-/* ---- ring-shaded bubbles ---- */
-.water__bubbles {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-.water__bubble {
-  position: absolute;
-  bottom: -60px;
-  opacity: 0;
-  will-change: transform, opacity;
-  animation: bubble-rise cubic-bezier(0.4, 0, 0.8, 0.6) infinite;
-  animation-play-state: paused;
-}
-.water__bubble-sway {
-  display: block;
-  animation: bubble-sway 0.9s ease-in-out infinite alternate;
-  animation-play-state: paused;
-}
-.water__bubble svg {
-  display: block;
-}
-.bub__rim  { fill: #9ff6ff; }
-.bub__core { fill: #2fb7f5; }
-.bub__hi   { fill: var(--white); }
-
-@keyframes bubble-rise {
-  0%   { transform: translate3d(0, 0, 0); opacity: 0; }
-  12%  { opacity: 1; }
-  85%  { opacity: 1; }
-  100% { transform: translate3d(0, -85vh, 0); opacity: 0; }
-}
-@keyframes bubble-sway {
-  from { transform: translate3d(calc(var(--sway) * -1), 0, 0); }
-  to   { transform: translate3d(var(--sway), 0, 0); }
-}
-
 /* animations only run while the water is on screen */
 .water.is-active .water__wave,
-.water.is-active .water__texture,
-.water.is-active .water__bubble,
-.water.is-active .water__bubble-sway {
+.water.is-active .water__texture {
   animation-play-state: running;
 }
 
@@ -148,9 +109,7 @@
     background: var(--blue);
   }
   .water__wave,
-  .water__texture,
-  .water__bubble,
-  .water__bubble-sway {
+  .water__texture {
     animation: none;
   }
 }
