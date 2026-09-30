@@ -44,10 +44,12 @@ export const routeBackgrounds = {
 
 /* ---------- Landing menu ---------------------------------------------- */
 
+// size = font size in px at a 1440px-wide screen (scales with the viewport)
+// x / y = nudge (px), skew / skewY = the per-item lean that gives the P3R look
 export const menuItems = [
-  { id: 'about', label: 'ABOUT ME', to: '/about' },
-  { id: 'github', label: 'GITHUB', github: true },
-  { id: 'projects', label: 'PROJECTS', to: '/projects' },
+  { id: 'about', label: 'ABOUT ME', to: '/about', size: 80, x: 0, y: 0, skew: -6, skewY: 10 },
+  { id: 'github', label: 'GITHUB', github: true, size: 70, x: 20, y: 8, skew: -11, skewY: -8 },
+  { id: 'projects', label: 'PROJECTS', to: '/projects', size: 64, x: 8, y: 6, skew: -4, skewY: 6 },
 ]
 
 /* ---------- /projects field mapping ------------------------------------

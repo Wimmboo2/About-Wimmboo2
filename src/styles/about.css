@@ -1,191 +1,162 @@
 .page--about {
-  --slab-w: 56vw;
-  --slab-bottom: 78%; /* where the slanted edge meets the bottom of the screen */
-  --pad-x: 7vw;
-  display: flex;
-  align-items: center;
+  /* 1 unit = 1px on a 1440px-wide screen */
+  --u: clamp(0.55px, 0.0694vw, 1.6px);
 }
 
-/* ---------- the slab ---------- */
-.slab {
+/* ---------- big stroked title, tilted with the panel ---------- */
+.about-title {
+  position: absolute;
+  z-index: 2;
+  top: 9vh;
+  left: 6vw;
+  margin: 0;
+  font-family: var(--font-caps);
+  font-weight: 400;
+  font-size: calc(100 * var(--u));
+  line-height: 1;
+  letter-spacing: 3px;
+  color: var(--white);
+  -webkit-text-stroke: 2px #000;
+  paint-order: stroke fill;
+  rotate: -20deg;
+  transform-origin: left bottom;
+  user-select: none;
+}
+
+/* ---------- the reveal panel ---------- */
+.reveal {
+  position: absolute;
+  z-index: 1;
+  top: 42vh;
+  left: -6vw;
+  width: 88vw;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  gap: calc(34 * var(--u));
+  padding: calc(44 * var(--u)) 0 calc(56 * var(--u));
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.98) 0%, rgb(243 246 252 / 0.98) 100%);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 88px) 100%, 0 100%);
+  rotate: -20deg;
+  transform-origin: left bottom;
+}
+.reveal::before {
+  /* red stripe along the top edge */
+  content: '';
   position: absolute;
   top: 0;
-  bottom: 0;
   left: 0;
-  width: var(--slab-w);
-  will-change: transform;
-}
-.slab > span {
-  position: absolute;
-  inset: 0;
-}
-.slab__white {
-  background: var(--white);
-  clip-path: polygon(0 0, 100% 0, var(--slab-bottom) 100%, 0 100%);
-}
-.slab__cyan {
-  background: var(--cyan);
-  clip-path: polygon(0 0, calc(100% - 14px) 0, calc(var(--slab-bottom) - 14px) 100%, 0 100%);
-}
-.slab__fill {
-  background: rgb(5 8 48 / 0.95);
-  clip-path: polygon(0 0, calc(100% - 20px) 0, calc(var(--slab-bottom) - 20px) 100%, 0 100%);
+  right: 0;
+  height: 8px;
+  background: linear-gradient(180deg, #e03d31 0%, #eb3333 100%);
 }
 
-/* ---------- content ---------- */
-.about {
-  position: relative;
-  width: calc(min(34vw, 620px) / var(--ui-zoom));
-  margin-left: calc(var(--pad-x) / var(--ui-zoom));
-  padding: 40px 0;
+.reveal__upper,
+.reveal__lower {
+  background: rgb(0 0 0 / 0.92);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 22px) 100%, 0 100%);
+  color: var(--white);
 }
 
-.about__title {
+/* top bar: the intro, centered */
+.reveal__upper {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 18px;
-  margin: 0 0 22px;
-  font-family: var(--font-heading);
-  font-weight: var(--heading-weight);
-  font-style: italic;
-  font-size: clamp(34px, 3.6vw, 58px);
-  line-height: 1;
-  letter-spacing: 0.01em;
-  color: var(--white);
+  justify-content: center;
+  gap: calc(10 * var(--u));
+  min-height: calc(210 * var(--u));
+  padding: calc(28 * var(--u)) 12vw calc(28 * var(--u)) 16vw;
+  text-align: center;
 }
-.about__title::after {
-  /* thin rule running off to the slab edge */
-  content: '';
-  flex: 1;
-  height: 2px;
-  margin-right: -8vw;
-  background: var(--cyan);
-}
-
-.about__intro {
-  margin-bottom: 30px;
-}
-.about__intro p {
-  margin: 0 0 0.6em;
-  max-width: 46ch;
-  font-family: var(--font-label);
-  font-weight: 500;
-  font-size: clamp(15px, 1.1vw, 18px);
-  line-height: 1.6;
-  color: #d4e3ff;
-}
-.about__intro .about__lead {
-  font-weight: 700;
-  font-size: clamp(19px, 1.5vw, 24px);
-  line-height: 1.35;
-  color: var(--white);
-}
-
-/* ---------- facts: rows inside the same slab ---------- */
-.about__facts {
-  list-style: none;
+.reveal__lead {
   margin: 0;
-  padding: 0;
-  border-top: 1px solid rgb(188 216 255 / 0.22);
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: calc(30 * var(--u));
+  letter-spacing: 0.5px;
+  line-height: 1.15;
 }
-.fact {
-  position: relative;
+.reveal__line {
+  margin: 0;
+  max-width: 52ch;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: calc(20 * var(--u));
+  letter-spacing: 0.5px;
+  line-height: 1.3;
+}
+
+/* bottom bar: the facts, pushed to the right like the game */
+.reveal__lower {
+  align-self: flex-end;
+  width: 54%;
+  padding: calc(22 * var(--u)) calc(60 * var(--u)) calc(22 * var(--u)) calc(34 * var(--u));
+}
+.reveal__facts {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(8 * var(--u));
+}
+.reveal__fact {
   display: grid;
-  grid-template-columns: 9.5em 1fr;
-  align-items: center;
-  gap: 14px;
-  min-height: 46px;
-  padding: 6px 12px;
-  border-bottom: 1px solid rgb(188 216 255 / 0.22);
-  outline: none;
-  cursor: default;
+  grid-template-columns: calc(150 * var(--u)) 1fr;
+  align-items: baseline;
+  gap: calc(16 * var(--u));
 }
-
-/* P3R cursor: a white bar that runs off the left edge, red copy underneath */
-.fact__bar {
-  position: absolute;
-  top: 3px;
-  bottom: 3px;
-  left: calc(var(--pad-x) * -1 - 4px);
-  right: -18px;
-}
-.fact__bar-red,
-.fact__bar-white {
-  position: absolute;
-  inset: 0;
-  clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
-}
-.fact__bar-red {
-  background: var(--red);
-  transform: translate(5px, 4px);
-}
-.fact__bar-white {
-  background: var(--white);
-}
-
-.fact__title {
-  position: relative;
-  font-family: var(--font-heading);
-  font-weight: var(--heading-weight);
-  font-style: italic;
-  font-size: clamp(16px, 1.25vw, 20px);
+.reveal__fact dt {
+  font-family: var(--font-caps);
+  font-size: calc(22 * var(--u));
+  letter-spacing: 3px;
   line-height: 1;
-  letter-spacing: 0.02em;
+  color: var(--menu-cyan);
   text-transform: uppercase;
-  color: var(--cyan);
 }
-.fact__text {
-  position: relative;
-  font-family: var(--font-label);
-  font-weight: 600;
-  font-size: clamp(14px, 1.05vw, 17px);
-  color: var(--white);
-}
-.fact.is-selected .fact__title {
-  color: var(--red);
-}
-.fact.is-selected .fact__text {
-  color: var(--blue-deep);
-}
-.fact:focus-visible .fact__bar-red {
-  background: var(--pink-red);
-  transform: translate(7px, 6px);
+.reveal__fact dd {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: calc(19 * var(--u));
+  letter-spacing: 0.4px;
+  line-height: 1.25;
+  text-transform: lowercase;
 }
 
-/* ---------- small screens: slab becomes a full-width sheet ---------- */
+/* ---------- small screens: less tilt, panel fills the width ---------- */
 @media (max-width: 700px) {
   .page--about {
-    --slab-w: 100vw;
-    --slab-bottom: 100%;
-    --pad-x: 20px;
-    align-items: flex-start;
+    --u: 0.72px;
+    min-height: 100vh;
+    min-height: 100dvh;
   }
-  .slab {
-    position: fixed;
+  .about-title {
+    top: 7vh;
+    left: 6vw;
+    font-size: 64px;
+    rotate: -8deg;
   }
-  .slab__white,
-  .slab__cyan,
-  .slab__fill {
-    clip-path: none;
+  .reveal {
+    top: 24vh;
+    left: -4vw;
+    width: 112vw;
+    min-height: 0;
+    gap: 16px;
+    padding: 28px 0 32px;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 40px) 100%, 0 100%);
+    rotate: -8deg;
+    transform-origin: left top;
   }
-  .slab__white,
-  .slab__cyan {
-    display: none;
+  .reveal__upper {
+    padding: 22px 16vw 22px 10vw;
+    min-height: 0;
   }
-  .about {
-    width: auto;
-    margin: 0 20px;
-    padding: 56px 0 48px;
+  .reveal__lower {
+    width: 92%;
+    padding: 18px 44px 18px 22px;
   }
-  .about__title::after {
-    margin-right: -20px;
-  }
-  .fact {
+  .reveal__fact {
     grid-template-columns: 1fr;
-    gap: 5px;
-    padding: 10px 10px;
-  }
-  .fact__bar {
-    right: -20px;
+    gap: 2px;
   }
 }
