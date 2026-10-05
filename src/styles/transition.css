@@ -1,49 +1,27 @@
-/* P3R submenu transition: see components/PageTransition.jsx */
+/* Slanted band swipe: see components/PageTransition.jsx */
 
-/* the incoming page, revealed through two growing circles */
-.stage--incoming {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  overflow: hidden;
-  will-change: clip-path;
-}
-.stage__backdrop {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-}
-.stage__backdrop img,
-.stage__backdrop canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* the wavy "blot": a zoomed, blue-tinted snapshot of the screen */
-.xfade__blot {
-  position: fixed;
-  inset: 0;
-  z-index: 40;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  visibility: hidden;
-}
-.xfade__blot.is-on {
-  visibility: visible;
-}
-
-/* blocks clicks while a transition runs */
 .xfade {
   position: fixed;
   inset: 0;
   z-index: 100;
+  overflow: hidden;
   pointer-events: none;
 }
 .xfade.is-active {
-  pointer-events: auto;
+  pointer-events: auto; /* blocks clicks while a transition runs */
 }
+
+.xfade__band {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 300vw;
+  transform: translateX(-300vw); /* parked off-screen until animated */
+  transform-origin: 0 100%;
+  will-change: transform;
+}
+.xfade__band--cyan { background: var(--p3r-cyan); }
+.xfade__band--white { background: var(--white); }
+.xfade__band--blue { background: #1438d8; }
+.xfade__band--navy { background: var(--p3r-navy); }

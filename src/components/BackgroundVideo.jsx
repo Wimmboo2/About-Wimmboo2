@@ -1,14 +1,13 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { routeBackgrounds, videos } from '../content.js'
 import { useTransitionNav } from '../lib/transition.js'
-import { preloadVideos, registerBgVideo, resolveVideoSrc, videoFileFor } from '../lib/videoCache.js'
+import { preloadVideos, resolveVideoSrc, videoFileFor } from '../lib/videoCache.js'
 import '../styles/background.css'
 
 const bgFor = (pathname) => routeBackgrounds[pathname] || routeBackgrounds['/']
 
-// One persistent <video> for the whole app. It swaps source when the page
-// transition hands over (the incoming page's backdrop shows the same first
-// frame, so the swap is invisible).
+// One persistent <video> for the whole app. It swaps source while the page
+// transition's bands cover the screen (the route only changes then).
 export default function BackgroundVideo() {
   const { displayedLocation } = useTransitionNav()
   const bg = bgFor(displayedLocation.pathname)
@@ -20,10 +19,8 @@ export default function BackgroundVideo() {
     const el = ref.current
     el.muted = true
     el.defaultMuted = true
-    registerBgVideo(el)
     el.play().catch(() => {})
     preloadVideos()
-    return () => registerBgVideo(null)
   }, [])
 
   // layout effect: the new poster/src must be set before the browser paints
