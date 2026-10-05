@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect } from 'react'
 
 export const TransitionContext = createContext(null)
 
-// { displayedLocation, incoming, busy, go(path), back(), incomingRef, snapshotRef }
+// { displayedLocation, busy, go(path), back() }
 export const useTransitionNav = () => useContext(TransitionContext)
 
 // Esc → back to landing (through the transition).
