@@ -139,7 +139,7 @@ export const about = {
   ],
 
   // PLACEHOLDER: shown at the very bottom, in this order
-  gameOst: { label: 'game ost', url: 'https://music.apple.com/id/playlist/castor/pl.u-GgA5klafoJ202lq' },
-  nonGameOst: { label: 'non-game ost', url: 'https://music.apple.com/id/playlist/caesar/pl.u-jV8908VCDrB9BkY' },
-  discord: 'wimmboo',
+  gameOst: { label: 'Game OST playlist', url: 'https://music.apple.com/id/playlist/castor/pl.u-GgA5klafoJ202lq' },
+  nonGameOst: { label: 'Non-Game OST playlist', url: 'https://music.apple.com/id/playlist/caesar/pl.u-jV8908VCDrB9BkY' },
+  discord: '@wimmboo',
 }
