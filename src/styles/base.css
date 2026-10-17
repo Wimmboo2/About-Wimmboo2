@@ -46,6 +46,11 @@ a {
   outline-offset: 3px;
 }
 
+/* page layer wrapper (see Stage in App.jsx) */
+.stage {
+  height: 100%;
+}
+
 .page {
   position: relative;
   z-index: 10;
@@ -57,6 +62,10 @@ a {
 @media (max-width: 700px) {
   body {
     overflow: auto;
+  }
+  .stage {
+    height: auto;
+    min-height: 100%;
   }
   .page {
     height: auto;

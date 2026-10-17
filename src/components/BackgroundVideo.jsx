@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { routeBackgrounds, videos } from '../content.js'
 import { useTransitionNav } from '../lib/transition.js'
-import { preloadVideos, registerBgVideo, resolveVideoSrc, videoFileFor } from '../lib/videoCache.js'
+import { preloadVideos, resolveVideoSrc, videoFileFor } from '../lib/videoCache.js'
 import '../styles/background.css'
 
 const bgFor = (pathname) => routeBackgrounds[pathname] || routeBackgrounds['/']
 
-// One persistent <video> for the whole app. It swaps source by route while
-// the water transition covers the screen (the route only changes then).
+// One persistent <video> for the whole app. It swaps source while the page
+// transition's bands cover the screen (the route only changes then).
 export default function BackgroundVideo() {
   const { displayedLocation } = useTransitionNav()
   const bg = bgFor(displayedLocation.pathname)
@@ -19,13 +19,12 @@ export default function BackgroundVideo() {
     const el = ref.current
     el.muted = true
     el.defaultMuted = true
-    registerBgVideo(el)
     el.play().catch(() => {})
     preloadVideos()
-    return () => registerBgVideo(null)
   }, [])
 
-  useEffect(() => {
+  // layout effect: the new poster/src must be set before the browser paints
+  useLayoutEffect(() => {
     const el = ref.current
     if (currentKey.current === bg.video) return
     currentKey.current = bg.video

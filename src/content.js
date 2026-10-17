@@ -73,9 +73,10 @@ export const projectFields = {
   // italic slot where "Lv 42" sits in the game
   subtitle: (r) => r.language || '—',
   // the big right-aligned number where play time sits
-  bigNumber: (r) => daysSince(r.created_at),
+  // set to e.g. (r) => daysSince(r.created_at) or 'stargazers_count' to show one; null = none
+  bigNumber: null,
   bigNumberLabel: '', // tiny label above the big number on the selected row ('' = none)
-  bigNumberSpoken: 'days old', // what screen readers say after the number
+  bigNumberSpoken: '', // what screen readers say after the number
   // selected-row extras
   description: (r) => r.description || 'No description yet.',
   stars: 'stargazers_count',

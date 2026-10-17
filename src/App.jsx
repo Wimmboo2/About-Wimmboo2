@@ -1,7 +1,7 @@
 import { MotionConfig } from 'framer-motion'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import BackgroundVideo from './components/BackgroundVideo.jsx'
-import WaterTransition from './components/WaterTransition.jsx'
+import PageTransition from './components/PageTransition.jsx'
 import { githubMode } from './content.js'
 import { useTransitionNav } from './lib/transition.js'
 import About from './pages/About.jsx'
@@ -11,12 +11,9 @@ import Projects from './pages/Projects.jsx'
 
 const KNOWN_PATHS = ['/', '/about', '/projects', ...(githubMode === 'page' ? ['/github'] : [])]
 
-// Routes render the *displayed* location, which only changes while the
-// water covers the screen.
-function AppRoutes() {
-  const { displayedLocation } = useTransitionNav()
+function PageRoutes({ location }) {
   return (
-    <Routes location={displayedLocation}>
+    <Routes location={location}>
       <Route path="/" element={<Landing />} />
       <Route path="/about" element={<About />} />
       <Route path="/projects" element={<Projects />} />
@@ -26,13 +23,24 @@ function AppRoutes() {
   )
 }
 
+// Renders the *displayed* location, which only changes while the transition
+// covers the screen.
+function Stage() {
+  const { displayedLocation } = useTransitionNav()
+  return (
+    <div className="stage">
+      <PageRoutes location={displayedLocation} />
+    </div>
+  )
+}
+
 export default function App() {
   return (
     <MotionConfig reducedMotion="user">
-      <WaterTransition knownPaths={KNOWN_PATHS}>
+      <PageTransition knownPaths={KNOWN_PATHS}>
         <BackgroundVideo />
-        <AppRoutes />
-      </WaterTransition>
+        <Stage />
+      </PageTransition>
     </MotionConfig>
   )
 }

@@ -1,0 +1,27 @@
+/* Slanted band swipe: see components/PageTransition.jsx */
+
+.xfade {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow: hidden;
+  pointer-events: none;
+}
+.xfade.is-active {
+  pointer-events: auto; /* blocks clicks while a transition runs */
+}
+
+.xfade__band {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 300vw;
+  transform: translateX(-300vw); /* parked off-screen until animated */
+  transform-origin: 0 100%;
+  will-change: transform;
+}
+.xfade__band--cyan { background: var(--p3r-cyan); }
+.xfade__band--white { background: var(--white); }
+.xfade__band--blue { background: #1438d8; }
+.xfade__band--navy { background: var(--p3r-navy); }

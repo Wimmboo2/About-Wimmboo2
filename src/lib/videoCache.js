@@ -30,27 +30,3 @@ export function preloadVideos() {
 }
 
 export const resolveVideoSrc = (key) => blobUrls[key] || videoFileFor(key)
-
-/* ---- the single persistent <video>: registry so the transition can wait for it ---- */
-
-let bgVideoEl = null
-export const registerBgVideo = (el) => {
-  bgVideoEl = el
-}
-
-// Resolves once the background video has a frame to show (or after `timeout` ms).
-export function waitForBgVideo(timeout = 700) {
-  const el = bgVideoEl
-  if (!el || el.readyState >= 3) return Promise.resolve()
-  return new Promise((resolve) => {
-    const done = () => {
-      clearTimeout(t)
-      el.removeEventListener('canplay', done)
-      el.removeEventListener('playing', done)
-      resolve()
-    }
-    const t = setTimeout(done, timeout)
-    el.addEventListener('canplay', done)
-    el.addEventListener('playing', done)
-  })
-}
