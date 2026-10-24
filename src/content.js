@@ -130,7 +130,8 @@ export const about = {
   // PLACEHOLDER: the intro, one entry per paragraph (the first one is shown bigger)
   intro: [
     'hi, im Wimmboo',
-    'i like AI, ML, web dev and games',
+    'i like AI, ML(machine learning), web dev',
+    'and i LOVE games, and music'
   ],
 
   // PLACEHOLDER: 3-4 short facts (each one is a line)
